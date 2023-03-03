@@ -12,6 +12,10 @@ builder.Services
     .AddAuth()
     .AddDbContext(builder.Configuration);
 
+builder.Services
+    .AddHandlers()
+    .AddRepositories();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
