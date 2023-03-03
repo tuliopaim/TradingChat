@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TradingChat.Domain\TradingChat.Domain.csproj" />
     <ProjectReference Include="..\TradingChat.Infrastructure\TradingChat.Infrastructure.csproj" />
   </ItemGroup>
 
