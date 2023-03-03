@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using TradingChat.Infrastructure.Persistence;
+using TradingChat.Infrastructure.Context;
 
 namespace TradingChat.WebApp.Configurations;
 
