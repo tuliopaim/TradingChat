@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace TradingChat.Infrastructure;
+namespace TradingChat.Infrastructure.Persistence;
 
 public class TradingChatDbContext :
     IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>

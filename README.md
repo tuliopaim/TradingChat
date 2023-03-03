@@ -3,10 +3,12 @@
 ## Roadmap
 
 - [x] Docker Compose with Postgres and Rabbit
-- [ ] MVC WebApp With Identity
+- [x] MVC WebApp with Identity
 - [ ] SignalR in front and backend with auth
-- [ ] Chat Room creation
-- [ ] Send and receive messages with SignalR
+- [ ] ChatRoom
+	- [ ] CRUD
+	- [ ] Enter, Leave
+	- [ ] Send and receive messages with SignalR
 	- [ ] Enqueue trading command
 - [ ] Trading Bot
 	- [ ] Rabbit consumer

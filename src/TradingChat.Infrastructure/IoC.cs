@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TradingChat.Infrastructure.Persistence;
 
 namespace TradingChat.Infrastructure;
 
