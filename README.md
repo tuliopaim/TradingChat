@@ -3,7 +3,7 @@
 ## Roadmap
 
 - [x] Docker Compose with Postgres and Rabbit
-- [x] MVC WebApp with Identity
+- [x] MVC WebApp with Identity and Seq
 - [ ] SignalR in front and backend with auth
 - [ ] ChatRoom
 	- [ ] CRUD
