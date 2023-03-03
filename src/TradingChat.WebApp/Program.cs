@@ -2,7 +2,7 @@ using TradingChat.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.AddSerilog();
 
 builder.Services.AddRazorPages();
 
