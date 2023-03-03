@@ -2,12 +2,18 @@ using TradingChat.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddControllersWithViews();
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages();
 
 builder.Services
     .AddDbContext(builder.Configuration)
     .AddIdentity();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/login";
+});
 
 var app = builder.Build();
 
@@ -26,6 +32,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
