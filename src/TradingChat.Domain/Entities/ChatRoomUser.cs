@@ -2,7 +2,7 @@
 
 public class ChatRoomUser
 {
-    private  ChatRoomUser()
+    private ChatRoomUser()
     {
     }
 
