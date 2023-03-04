@@ -1,8 +1,8 @@
 ﻿using TradingChat.Domain.UseCases.Base;
 
-namespace TradingChat.Domain.UseCases.CreateUser;
+namespace TradingChat.Domain.UseCases.CreateChatUser;
 
-public record CreateUserCommand(
+public record CreateChatUserCommand(
     string Email,
     string Name,
     string Password) : ICommand;
