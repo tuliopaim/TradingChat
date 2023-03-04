@@ -12,6 +12,15 @@ namespace TradingChat.Infrastructure;
 
 public static class IoC
 {
+    public static IServiceCollection InjectServices(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<ICurrentUser, CurrentUser>()
+            .AddValidators()
+            .AddMediator()
+            .AddRepositories();
+    }
+
     public static IServiceCollection AddDbContext(
         this IServiceCollection services,
         IConfiguration configuration)

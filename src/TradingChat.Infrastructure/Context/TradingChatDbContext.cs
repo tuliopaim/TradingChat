@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TradingChat.Domain.Entities;
 
 namespace TradingChat.Infrastructure.Context;
 
@@ -11,6 +12,9 @@ public class TradingChatDbContext :
         : base(options)
     {
     }
+
+    public DbSet<ChatRoom> ChatRooms => Set<ChatRoom>();
+    public DbSet<ChatUser> ChatUsers => Set<ChatUser>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

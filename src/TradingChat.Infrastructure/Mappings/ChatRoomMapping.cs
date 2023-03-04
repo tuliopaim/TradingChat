@@ -13,5 +13,10 @@ public class ChatRoomMapping : IEntityTypeConfiguration<ChatRoom>
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(30);
+
+        builder
+            .HasOne(x => x.Owner)
+            .WithMany()
+            .HasForeignKey(x => x.OwnerId);
     }
 }
