@@ -7,14 +7,11 @@ namespace TradingChat.Infrastructure.Repositories;
 
 public class ChatRoomRepository : BaseRepository<ChatRoom>, IChatRoomRepository
 {
-    private readonly TradingChatDbContext _context;
-
     public ChatRoomRepository(TradingChatDbContext context) : base(context)
     {
-        _context = context;
     }
 
-    public Task<ChatRoom?> GetWithUsers(Guid chatRoomId)
+    public Task<ChatRoom?> GetWithUsersAsTracking(Guid chatRoomId)
     {
         return Get()
             .Include(x => x.Users)

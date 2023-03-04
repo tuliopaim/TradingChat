@@ -3,6 +3,7 @@ using System.Security.Claims;
 using TradingChat.Application.Abstractions;
 
 namespace TradingChat.Infrastructure;
+
 public class CurrentUser : ICurrentUser
 {
     private readonly IHttpContextAccessor _acessor;

@@ -14,7 +14,9 @@ public class GetChatsInfoHandler : IQueryHandler<GetChatsInfoQuery, ChatsInfoRes
         _chatRoomRepository = chatRoomRepository;
     }
 
-    public async Task<Result<ChatsInfoResult>> Handle(GetChatsInfoQuery request, CancellationToken cancellationToken)
+    public async Task<Result<ChatsInfoResult>> Handle(
+        GetChatsInfoQuery request,
+        CancellationToken cancellationToken)
     {
         var chats = await _chatRoomRepository
             .GetAsNoTracking()

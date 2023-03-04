@@ -19,12 +19,16 @@ public class JoinChatRoomCommandHandler : ICommandHandler<JoinChatRoomCommand>
 
     public async Task<Result> Handle(JoinChatRoomCommand request, CancellationToken cancellationToken)
     {
-        var chatRoom = await _chatRoomRepository.GetWithUsers(request.ChatRoomId);
+        var chatRoom = await _chatRoomRepository.GetWithUsersAsTracking(request.ChatRoomId);
 
         if (chatRoom is null)
         {
             return new Error("ChatRoom not found!");
         }
+
+        var userId = _currentUser.Id!.Value;
+
+        if (chatRoom.ContainsUser(userId)) return Result.Success();
 
         var result = chatRoom.AddUser(_currentUser.Id!.Value);
 
@@ -32,7 +36,7 @@ public class JoinChatRoomCommandHandler : ICommandHandler<JoinChatRoomCommand>
 
         await _chatRoomRepository.SaveChangesAsync(cancellationToken);
 
-        return result;
+        return Result.Success();
     }
 }
 
