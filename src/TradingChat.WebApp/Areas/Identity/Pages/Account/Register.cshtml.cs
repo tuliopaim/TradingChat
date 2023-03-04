@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TradingChat.Domain.UseCases.CreateUser;
+using TradingChat.Domain.UseCases.CreateChatUser;
 
 namespace TradingChat.WebApp.Areas.Identity.Pages.Account;
 
@@ -68,7 +68,7 @@ public class RegisterModel : PageModel
             return Page();
         }
 
-        var command = new CreateUserCommand(Input.Email, Input.Name, Input.Password);
+        var command = new CreateChatUserCommand(Input.Email, Input.Name, Input.Password);
 
         var result = await _mediator.Send(command, default);
 

@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace TradingChat.Domain.UseCases.CreateUser;
+namespace TradingChat.Domain.UseCases.CreateChatUser;
 
-public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+public class CreateUserCommandValidator : AbstractValidator<CreateChatUserCommand>
 {
     public CreateUserCommandValidator()
     {

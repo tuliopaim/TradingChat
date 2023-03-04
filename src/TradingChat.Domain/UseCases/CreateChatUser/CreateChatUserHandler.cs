@@ -5,9 +5,9 @@ using TradingChat.Domain.Entities;
 using TradingChat.Domain.Shared;
 using TradingChat.Domain.UseCases.Base;
 
-namespace TradingChat.Domain.UseCases.CreateUser;
+namespace TradingChat.Domain.UseCases.CreateChatUser;
 
-public class CreateChatUserHandler : ICommandHandler<CreateUserCommand>
+public class CreateChatUserHandler : ICommandHandler<CreateChatUserCommand>
 {
     private readonly ILogger<CreateChatUserHandler> _logger;
     private readonly UserManager<IdentityUser<Guid>> _userManager;
@@ -23,7 +23,7 @@ public class CreateChatUserHandler : ICommandHandler<CreateUserCommand>
         _userRepository = userRepository;
     }
 
-    public async Task<Result> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateChatUserCommand command, CancellationToken cancellationToken)
     {
         await _userRepository.BeginTransactionAsync(cancellationToken);
 
@@ -46,7 +46,7 @@ public class CreateChatUserHandler : ICommandHandler<CreateUserCommand>
         }
     }
 
-    private async Task<Result> CreateUser(CreateUserCommand command, CancellationToken cancellationToken)
+    private async Task<Result> CreateUser(CreateChatUserCommand command, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Creating identity user {UserEmail}", command.Email);
 
@@ -77,7 +77,7 @@ public class CreateChatUserHandler : ICommandHandler<CreateUserCommand>
         return Result.Success();
     }
 
-    private Result LogAndReturnUserManagerErrors(CreateUserCommand command, IdentityResult result)
+    private Result LogAndReturnUserManagerErrors(CreateChatUserCommand command, IdentityResult result)
     {
         var errors = result.Errors
            .Select(e => new Error(e.Description))
