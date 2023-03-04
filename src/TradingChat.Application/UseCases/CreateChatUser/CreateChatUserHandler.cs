@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using TradingChat.Application.Abstractions;
 using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Entities;
 using TradingChat.Domain.Shared;
-using TradingChat.Domain.UseCases.Base;
 
-namespace TradingChat.Domain.UseCases.CreateChatUser;
+namespace TradingChat.Application.UseCases.CreateChatUser;
 
 public class CreateChatUserHandler : ICommandHandler<CreateChatUserCommand>
 {

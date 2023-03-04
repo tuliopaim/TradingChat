@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace TradingChat.Domain.UseCases.CreateChatRoom;
+namespace TradingChat.Application.UseCases.CreateChatRoom;
 
 public class CreateChatRoomCommandValidator : AbstractValidator<CreateChatRoomCommand>
 {

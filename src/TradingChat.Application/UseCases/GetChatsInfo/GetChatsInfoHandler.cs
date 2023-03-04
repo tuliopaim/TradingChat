@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TradingChat.Application.Abstractions;
 using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Shared;
-using TradingChat.Domain.UseCases.Base;
 
-namespace TradingChat.Domain.UseCases.GetChatsInfo;
+namespace TradingChat.Application.UseCases.GetChatsInfo;
 
 public class GetChatsInfoHandler : IQueryHandler<GetChatsInfoQuery, ChatsInfoResult>
 {
@@ -18,7 +18,7 @@ public class GetChatsInfoHandler : IQueryHandler<GetChatsInfoQuery, ChatsInfoRes
     {
         var chats = await _chatRoomRepository
             .GetAsNoTracking()
-            .Select(x => new ChatInfoModel 
+            .Select(x => new ChatInfoModel
             {
                 Id = x.Id,
                 NumberOfUsers = x.Users.Count(),

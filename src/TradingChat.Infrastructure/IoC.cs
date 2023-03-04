@@ -3,8 +3,10 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TradingChat.Application;
+using TradingChat.Application.Abstractions;
+using TradingChat.Application.Pipelines;
 using TradingChat.Domain.Contracts;
-using TradingChat.Domain.UseCases.Base.Pipelines;
 using TradingChat.Infrastructure.Context;
 using TradingChat.Infrastructure.Repositories;
 
@@ -40,7 +42,7 @@ public static class IoC
         this IServiceCollection services)
     {
         return services
-            .AddValidatorsFromAssembly(typeof(Domain.AssemblyReference).Assembly);
+            .AddValidatorsFromAssembly(typeof(AssemblyReference).Assembly);
     }
 
     public static IServiceCollection AddMediator(
@@ -52,7 +54,7 @@ public static class IoC
             config =>
             {
                 config
-                    .RegisterServicesFromAssembly(typeof(Domain.AssemblyReference).Assembly);
+                    .RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly);
             });
     }
 

@@ -1,6 +1,6 @@
-﻿using TradingChat.Domain.UseCases.Base;
+﻿using TradingChat.Application.Abstractions;
 
-namespace TradingChat.Domain.UseCases.CreateChatUser;
+namespace TradingChat.Application.UseCases.CreateChatUser;
 
 public record CreateChatUserCommand(
     string Email,

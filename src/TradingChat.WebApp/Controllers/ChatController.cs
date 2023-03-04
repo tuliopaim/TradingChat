@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TradingChat.Domain.UseCases.CreateChatRoom;
-using TradingChat.Domain.UseCases.GetChatsInfo;
-using TradingChat.WebApp.ViewModels;
+using TradingChat.Application.UseCases.CreateChatRoom;
+using TradingChat.Application.UseCases.GetChatsInfo;
+using TradingChat.WebApp.Extensions;
 
 namespace TradingChat.WebApp.Controllers;
 
@@ -31,24 +31,19 @@ public class ChatController : Controller
     [Authorize]
     public async Task<IActionResult> Create(
         [FromServices] IMediator mediator,
-        CreateChatRoomModel model,
+        CreateChatRoomCommand command,
         CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid) return View();
-
-        var command = new CreateChatRoomCommand(model.Name!, model.MaxNumberOfUsers);
 
         var result = await mediator.Send(command, cancellationToken);
 
         if (result.IsSuccess)
         {
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        foreach(var error in  result.Errors)
-        {
-            ModelState.AddModelError("", error.Message);
-        }
+        result.ToModelState(ModelState);
         
         return View();
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
-using TradingChat.Domain.Contracts;
+using TradingChat.Application.Abstractions;
 
 namespace TradingChat.Infrastructure;
 public class CurrentUser : ICurrentUser

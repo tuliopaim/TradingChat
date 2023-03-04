@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TradingChat.Domain.Shared;
 
-namespace TradingChat.Domain.UseCases.Base;
+namespace TradingChat.Application.Abstractions;
 
 public interface IQuery<TResponse> : IRequest<Result<TResponse>>
 {

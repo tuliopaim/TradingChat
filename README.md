@@ -4,9 +4,8 @@
 
 - [x] Docker Compose with Postgres and Rabbit
 - [x] MVC WebApp with Identity and Seq
-- [ ] SignalR in front and backend with auth
 - [ ] ChatRoom
-	- [ ] CRUD
+	- [x] Create and List
 	- [ ] Enter, Leave
 	- [ ] Send and receive messages with SignalR
 	- [ ] Enqueue trading command
