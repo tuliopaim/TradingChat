@@ -13,7 +13,7 @@ builder.Services
     .AddDbContext(builder.Configuration);
 
 builder.Services
-    .AddHandlers()
+    .AddMediator()
     .AddRepositories();
 
 var app = builder.Build();
