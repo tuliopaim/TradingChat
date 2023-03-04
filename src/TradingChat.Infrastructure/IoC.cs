@@ -51,6 +51,7 @@ public static class IoC
         this IServiceCollection services)
     {
         return services
+            .AddScoped<IChatRoomRepository, ChatRoomRepository>()
             .AddScoped<IChatUserRepository, ChatUserRepository>();
     }
 }
