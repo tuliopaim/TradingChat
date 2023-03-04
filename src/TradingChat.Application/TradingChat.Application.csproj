@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -9,6 +9,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.3" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.3" />
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TradingChat.Domain\TradingChat.Domain.csproj" />
   </ItemGroup>
 
 </Project>

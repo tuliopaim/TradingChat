@@ -1,4 +1,4 @@
-﻿namespace TradingChat.Domain.UseCases.GetChatsInfo;
+﻿namespace TradingChat.Application.UseCases.GetChatsInfo;
 
 public class ChatsInfoResult
 {

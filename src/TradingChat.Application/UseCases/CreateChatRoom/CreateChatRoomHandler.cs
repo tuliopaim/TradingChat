@@ -1,9 +1,9 @@
-﻿using TradingChat.Domain.Contracts;
+﻿using TradingChat.Application.Abstractions;
+using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Entities;
 using TradingChat.Domain.Shared;
-using TradingChat.Domain.UseCases.Base;
 
-namespace TradingChat.Domain.UseCases.CreateChatRoom;
+namespace TradingChat.Application.UseCases.CreateChatRoom;
 
 public class CreateChatRoomHandler : ICommandHandler<CreateChatRoomCommand>
 {

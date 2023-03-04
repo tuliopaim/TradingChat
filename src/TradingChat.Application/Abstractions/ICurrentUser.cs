@@ -1,4 +1,4 @@
-﻿namespace TradingChat.Domain.Contracts;
+﻿namespace TradingChat.Application.Abstractions;
 
 public interface ICurrentUser
 {

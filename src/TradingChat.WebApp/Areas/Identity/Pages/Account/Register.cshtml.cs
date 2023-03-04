@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TradingChat.Domain.UseCases.CreateChatUser;
+using TradingChat.Application.UseCases.CreateChatUser;
 
 namespace TradingChat.WebApp.Areas.Identity.Pages.Account;
 

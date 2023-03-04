@@ -2,7 +2,7 @@
 using MediatR;
 using TradingChat.Domain.Shared;
 
-namespace TradingChat.Domain.UseCases.Base.Pipelines;
+namespace TradingChat.Application.Pipelines;
 
 public class ValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
