@@ -3,10 +3,11 @@ using Microsoft.Extensions.Logging;
 using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Entities;
 using TradingChat.Domain.Shared;
+using TradingChat.Domain.UseCases.Base;
 
 namespace TradingChat.Domain.UseCases.CreateUser;
 
-public class CreateChatUserHandler : ICreateChatUserHandler
+public class CreateChatUserHandler : ICommandHandler<CreateUserCommand>
 {
     private readonly ILogger<CreateChatUserHandler> _logger;
     private readonly UserManager<IdentityUser<Guid>> _userManager;
@@ -79,7 +80,7 @@ public class CreateChatUserHandler : ICreateChatUserHandler
     private Result LogAndReturnUserManagerErrors(CreateUserCommand command, IdentityResult result)
     {
         var errors = result.Errors
-           .Select(e => new Error($"[{e.Code}] - {e.Description}"))
+           .Select(e => new Error(e.Description))
            .ToList();
 
         _logger.LogInformation("Error creating IdentityUser {UserEmail} - {@Errors}", command.Email, errors);

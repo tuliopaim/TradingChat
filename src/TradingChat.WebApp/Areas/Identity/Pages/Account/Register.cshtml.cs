@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using System.ComponentModel.DataAnnotations;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,16 +11,16 @@ namespace TradingChat.WebApp.Areas.Identity.Pages.Account;
 
 public class RegisterModel : PageModel
 {
-    private readonly ICreateChatUserHandler _createUserHandler;
+    private readonly IMediator _mediator;
     private readonly SignInManager<IdentityUser<Guid>> _signInManager;
     private readonly ILogger<RegisterModel> _logger;
 
     public RegisterModel(
-        ICreateChatUserHandler createUserHandler,
+        IMediator mediator,
         SignInManager<IdentityUser<Guid>> signInManager,
         ILogger<RegisterModel> logger)
     {
-        _createUserHandler = createUserHandler;
+        _mediator = mediator;
         _signInManager = signInManager;
         _logger = logger;
     }
@@ -53,7 +54,6 @@ public class RegisterModel : PageModel
         public string ConfirmPassword { get; set; }
     }
 
-
     public async Task OnGetAsync(string returnUrl = null)
     {
         ReturnUrl = returnUrl;
@@ -70,7 +70,7 @@ public class RegisterModel : PageModel
 
         var command = new CreateUserCommand(Input.Email, Input.Name, Input.Password);
 
-        var result = await _createUserHandler.Handle(command, default);
+        var result = await _mediator.Send(command, default);
 
         if (result.IsSuccess)
         {
