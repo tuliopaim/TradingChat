@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using TradingChat.Application.UseCases.CreateChatRoom;
 using TradingChat.Application.UseCases.GetChatsInfo;
 using TradingChat.Application.UseCases.JoinChatRoom;
+using TradingChat.Application.UseCases.SendMessage;
+using TradingChat.Domain.Shared;
 using TradingChat.WebApp.Extensions;
 
 namespace TradingChat.WebApp.Controllers;
@@ -63,9 +65,26 @@ public class ChatController : Controller
             });
     }
 
-    [HttpGet("/Chat/{chatId}")]
+    [HttpGet("/Chat/{chatId:Guid}")]
+    [Authorize]
     public IActionResult Chat(Guid chatId)
     {
         return View(chatId);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> SendMessage(
+       [FromServices] IMediator mediator,
+       SendMessageCommand command)
+    {
+        Result result = await mediator.Send(command);
+    
+        return result.IsSuccess 
+            ? Ok() 
+            : BadRequest(new
+            {
+                errors = result.Errors.Select(e => e.Message),
+            });
     }
 }
