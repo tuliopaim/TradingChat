@@ -1,7 +1,36 @@
-﻿@{
+﻿@using TradingChat.Domain.UseCases.GetChatsInfo;
+@model ChatsInfoResult
+@{
     ViewData["Title"] = "Chats";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Chats</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-8 mx-auto">
+            <div class="text-center">
+                <h1 class="display-4">Chats</h1>
+            </div>
+            <hr />
+            <a asp-action="Create" class="btn btn-primary">Create new Chat</a>
+            <hr />
+            <div class="container">
+                <div class="row">
+                    @foreach (var chat in Model.Chats)
+                    {
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">@chat.Name</h5>
+                                    <p class="card-text">Users: @chat.NumberOfUsers / @chat.MaxNumberOfUsers</p>
+                                    <p class="card-text">Owner: @chat.Owner</p>
+                                    <a href="@Url.Action("ChatDetails", "Chat", new { id = chat.Id })" class="btn btn-primary">Join chat</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
