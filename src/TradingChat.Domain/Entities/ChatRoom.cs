@@ -30,11 +30,19 @@ public class ChatRoom
     private readonly List<ChatRoomUser> _users = new();
     public virtual IReadOnlyList<ChatRoomUser> Users => _users.AsReadOnly();
 
+    private readonly List<ChatMessage> _messages = new();
+    public virtual IReadOnlyList<ChatMessage> Messages => _messages.AsReadOnly();
+
     public Result AddUser(Guid userId)
     {
         if (ContainsUser(userId))
         {
-            return new Error("User already in chat!");
+            return Result.Success();
+        }
+
+        if (_users.Count == MaxNumberOfUsers)
+        {
+            return Result.WithError("Chat with maximum capactity!");
         }
 
         _users.Add(new ChatRoomUser(Id, userId));
@@ -42,7 +50,12 @@ public class ChatRoom
         return Result.Success();
     }
 
-    private bool ContainsUser(Guid userId)
+    public void AddMessage(ChatMessage message)
+    {
+        _messages.Add(message);
+    }
+
+    public bool ContainsUser(Guid userId)
     {
         return _users.Any(u => u.ChatUserId == userId);
     }

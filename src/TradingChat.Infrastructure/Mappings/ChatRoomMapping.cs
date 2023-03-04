@@ -10,6 +10,9 @@ public class ChatRoomMapping : IEntityTypeConfiguration<ChatRoom>
     {
         builder.ToTable("chat_rooms", CustomSchemas.TradingChat);
 
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedNever();
+
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(30);
@@ -18,5 +21,10 @@ public class ChatRoomMapping : IEntityTypeConfiguration<ChatRoom>
             .HasOne(x => x.Owner)
             .WithMany()
             .HasForeignKey(x => x.OwnerId);
+
+        builder
+            .HasMany(x => x.Messages)
+            .WithOne(x => x.ChatRoom)
+            .HasForeignKey(x => x.ChatRoomId);
     }
 }

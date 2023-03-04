@@ -10,6 +10,9 @@ public class ChatUserMapping : IEntityTypeConfiguration<ChatUser>
     {
         builder.ToTable("chat_users", CustomSchemas.TradingChat);
 
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedNever();
+
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(30);
