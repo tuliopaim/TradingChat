@@ -2,7 +2,7 @@
 
 public class Result
 {
-    public Result(bool isSuccess)
+    protected Result(bool isSuccess)
     {
         IsSuccess = isSuccess;
     }
@@ -13,7 +13,6 @@ public class Result
     }
 
     protected Result(bool isSuccess, IEnumerable<Error> errors) : this(isSuccess)
-
     {
         if (isSuccess && errors.Any() ||
             !isSuccess && !errors.Any())

@@ -15,6 +15,7 @@ public class TradingChatDbContext :
 
     public DbSet<ChatRoom> ChatRooms => Set<ChatRoom>();
     public DbSet<ChatUser> ChatUsers => Set<ChatUser>();
+    public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
