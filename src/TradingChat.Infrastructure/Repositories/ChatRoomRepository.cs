@@ -14,6 +14,13 @@ public class ChatRoomRepository : BaseRepository<ChatRoom>, IChatRoomRepository
         _context = context;
     }
 
+    public Task<ChatRoom?> GetWithUsers(Guid chatRoomId)
+    {
+        return Get()
+            .Include(x => x.Users)
+            .FirstOrDefaultAsync(c => c.Id == chatRoomId);
+    }
+
     public Task<bool> NameAlreadyTaken(string name)
     {
         return GetAsNoTracking()
