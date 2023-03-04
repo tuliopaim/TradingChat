@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TradingChat.Infrastructure.Context;
@@ -11,9 +12,11 @@ using TradingChat.Infrastructure.Context;
 namespace TradingChat.Infrastructure.Migrations
 {
     [DbContext(typeof(TradingChatDbContext))]
-    partial class TradingChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230304005557_ChatOwner")]
+    partial class ChatOwner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

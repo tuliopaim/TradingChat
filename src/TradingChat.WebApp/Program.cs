@@ -8,13 +8,9 @@ builder.AddSerilog();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
-builder.Services
-    .AddAuth()
-    .AddDbContext(builder.Configuration);
+builder.Services.AddAuth().AddDbContext(builder.Configuration);
 
-builder.Services
-    .AddMediator()
-    .AddRepositories();
+builder.Services.InjectServices();
 
 var app = builder.Build();
 

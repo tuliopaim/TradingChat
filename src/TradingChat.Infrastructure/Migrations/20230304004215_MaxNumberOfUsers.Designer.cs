@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TradingChat.Infrastructure.Context;
@@ -11,9 +12,11 @@ using TradingChat.Infrastructure.Context;
 namespace TradingChat.Infrastructure.Migrations
 {
     [DbContext(typeof(TradingChatDbContext))]
-    partial class TradingChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230304004215_MaxNumberOfUsers")]
+    partial class MaxNumberOfUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,12 +234,7 @@ namespace TradingChat.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("chat_rooms", "tc");
                 });
@@ -330,17 +328,6 @@ namespace TradingChat.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TradingChat.Domain.Entities.ChatRoom", b =>
-                {
-                    b.HasOne("TradingChat.Domain.Entities.ChatUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("TradingChat.Domain.Entities.ChatRoomUser", b =>

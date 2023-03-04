@@ -8,25 +8,36 @@ public class ChatRoom
     {
     }
 
-    public ChatRoom(string name)
+    public ChatRoom(
+        string name,
+        int maxNumberOfUsers,
+        Guid ownerId)
     {
         Name = name;
+        MaxNumberOfUsers = maxNumberOfUsers;
+        OwnerId = ownerId;
+
+        AddUser(OwnerId);
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; private set; }
+    public int MaxNumberOfUsers { get; private set; }
+
+    public Guid OwnerId { get; private set; }
+    public virtual ChatUser? Owner { get; private set; }
 
     private readonly List<ChatRoomUser> _users = new();
-    public IReadOnlyList<ChatRoomUser> Users => _users.AsReadOnly();
+    public virtual IReadOnlyList<ChatRoomUser> Users => _users.AsReadOnly();
 
-    public Result AddUser(ChatUser user)
+    public Result AddUser(Guid userId)
     {
-        if (ContainsUser(user.Id))
+        if (ContainsUser(userId))
         {
             return new Error("User already in chat!");
         }
 
-        _users.Add(new ChatRoomUser(Id, user.Id));
+        _users.Add(new ChatRoomUser(Id, userId));
 
         return Result.Success();
     }
