@@ -6,7 +6,7 @@
 - [x] MVC WebApp with Identity and Seq
 - [ ] ChatRoom
 	- [x] Create and List
-	- [ ] Enter, Leave
+	- [x] Join Chat
 	- [ ] Send and receive messages with SignalR
 	- [ ] Enqueue trading command
 - [ ] Trading Bot
