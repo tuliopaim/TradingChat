@@ -2,14 +2,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using TradingChat.Core.Messaging;
 
-namespace TradingChat.Infrastructure.Messaging;
+namespace TradingChat.Infrastructure.StartupServices;
 
 public class QueueCreator
 {
     private readonly IServiceProvider _serviceProvider;
 
     public QueueCreator(IServiceProvider serviceProvider)
-	{
+    {
         _serviceProvider = serviceProvider;
     }
 
@@ -33,7 +33,7 @@ public class QueueCreator
 
         using var channel = rabbitConnection.Connection.CreateModel();
 
-        foreach(var routingKey in RabbitRoutingKeys.All)
+        foreach (var routingKey in RabbitRoutingKeys.All)
         {
             channel.QueueDeclare(queue: routingKey,
                durable: true,
