@@ -30,15 +30,16 @@ services:
 
   rabbitmq:
       container_name: trading-chat-rabbitmq
-      image: rabbitmq:3-management
+      image: rabbitmq:3.11.10-management
       hostname: localhost
       ports:
           - 5672:5672
-          - 15672:1567
+          - 15672:15672
       networks:
           - trading-chat-net
       volumes:
-          - rabbitmq-data:/var/lib/rabbitmq
+        - rabbitmq-data:/var/lib/rabbitmq/
+        - rabbitmq-log:/var/log/rabbitmq
 
 networks:
   trading-chat-net:
@@ -48,3 +49,4 @@ volumes:
   seq-data:
   postgres-data:
   rabbitmq-data:
+  rabbitmq-log:
