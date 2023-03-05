@@ -5,12 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TradingChat.Application;
 using TradingChat.Application.Abstractions;
-using TradingChat.Application.Contracts;
 using TradingChat.Application.Pipelines;
+using TradingChat.Core.Messaging;
 using TradingChat.Domain.Contracts;
 using TradingChat.Infrastructure.Context;
 using TradingChat.Infrastructure.Repositories;
-using TradingChat.Infrastructure.Stooq;
 
 namespace TradingChat.Infrastructure;
 
@@ -25,7 +24,8 @@ public static class IoC
             .AddDbContext(configuration)
             .AddValidators()
             .AddMediator()
-            .AddRepositories();
+            .AddRepositories()
+            .AddRabbitMq(configuration);
     }
 
     public static IServiceCollection InjectBotServices(
@@ -33,8 +33,7 @@ public static class IoC
     {
         return services
             .AddValidators()
-            .AddMediator()
-            .AddStockPriceService();
+            .AddMediator();
     }
 
     public static IServiceCollection AddDbContext(
@@ -80,12 +79,14 @@ public static class IoC
             .AddScoped<IChatUserRepository, ChatUserRepository>();
     }
 
-    public static IServiceCollection AddStockPriceService(
-        this IServiceCollection services)
+    public static IServiceCollection AddRabbitMq(
+            this IServiceCollection services,
+            IConfiguration configuration)
     {
-        services.AddHttpClient<StooqClient>();
-
-        services.AddScoped<IStockPriceService, StooqService>();
+        services.AddSingleton<RabbitMqConnection>();
+        services.AddScoped<RabbitMqProducer>();
+        services.Configure<RabbitMqSettings>(
+            configuration.GetSection(nameof(RabbitMqSettings)));
 
         return services;
     }
