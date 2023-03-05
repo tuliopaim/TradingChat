@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TradingChat.Application.Abstractions;
+using TradingChat.Core;
 using TradingChat.Domain.Contracts;
-using TradingChat.Domain.Shared;
 
 namespace TradingChat.Application.UseCases.GetChatsInfo;
 

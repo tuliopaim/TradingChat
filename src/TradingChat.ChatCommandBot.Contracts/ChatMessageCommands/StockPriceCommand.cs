@@ -1,7 +1,7 @@
 ﻿using TradingChat.ChatCommandBot.Commands.Contracts;
+using TradingChat.Core;
 using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
-using TradingChat.Domain.Shared;
 
 namespace TradingChat.ChatCommandBot.Commands.ChatMessageCommands;
 

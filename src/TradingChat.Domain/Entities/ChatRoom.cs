@@ -1,4 +1,4 @@
-﻿using TradingChat.Domain.Shared;
+﻿using TradingChat.Core;
 
 namespace TradingChat.Domain.Entities;
 

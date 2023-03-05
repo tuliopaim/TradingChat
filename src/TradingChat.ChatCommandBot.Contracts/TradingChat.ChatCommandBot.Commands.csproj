@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TradingChat.Core\TradingChat.Core.csproj" />
-    <ProjectReference Include="..\TradingChat.Domain\TradingChat.Domain.csproj" />
   </ItemGroup>
 
 </Project>

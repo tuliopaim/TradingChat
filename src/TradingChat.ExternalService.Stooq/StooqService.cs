@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using System.Globalization;
 using TradingChat.ChatCommandBot.Commands.Contracts;
-using TradingChat.Domain.Shared;
+using TradingChat.Core;
 
 namespace TradingChat.ExternalService.Stooq;
 

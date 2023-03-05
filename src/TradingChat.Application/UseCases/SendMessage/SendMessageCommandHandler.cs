@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TradingChat.Application.Abstractions;
 using TradingChat.Application.UseCases.Shared;
+using TradingChat.Core;
 using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
 using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Entities;
-using TradingChat.Domain.Shared;
 
 namespace TradingChat.Application.UseCases.SendMessage;
 

@@ -7,7 +7,7 @@ using TradingChat.Application.UseCases.GetChatsInfo;
 using TradingChat.Application.UseCases.JoinChatRoom;
 using TradingChat.Application.UseCases.SendMessage;
 using TradingChat.Application.UseCases.Shared;
-using TradingChat.Domain.Shared;
+using TradingChat.Core;
 using TradingChat.WebApp.Extensions;
 
 namespace TradingChat.WebApp.Controllers;

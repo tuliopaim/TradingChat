@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using TradingChat.Domain.Shared;
+using TradingChat.Core;
 
 namespace TradingChat.ExternalService.Stooq;
 
