@@ -11,10 +11,10 @@ public class ChatMessage
         Guid chatUserId,
         Guid chatRoomId)
     {
-        Message = message;
         ChatUserId = chatUserId;
         ChatRoomId = chatRoomId;
         SentAt = DateTimeOffset.UtcNow;
+        Message = ConvertMessageToHtml(message);
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -28,4 +28,9 @@ public class ChatMessage
     public ChatRoom? ChatRoom { get; private set; }
 
     public bool IsCommand => Message.StartsWith('/');
+
+    public static string ConvertMessageToHtml(string message)
+    {
+        return message.Replace("\n", "<br>");
+    }
 }

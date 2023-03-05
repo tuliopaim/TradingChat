@@ -3,13 +3,13 @@ using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
-namespace TradingChat.Core.Messaging;
+namespace TradingChat.Core.Rabbit;
 
 public static class RabbitMqExtensions
 {
     public static T GetDeserializedMessage<T>(this BasicDeliverEventArgs rabbitEventArgs)
     {
-        var messageBody = GetMessageBody(rabbitEventArgs);
+        var messageBody = rabbitEventArgs.GetMessageBody();
         return JsonSerializer.Deserialize<T>(messageBody)!;
     }
 

@@ -2,10 +2,11 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using TradingChat.Core.Messaging;
 
-namespace TradingChat.Core.Messaging;
+namespace TradingChat.Core.Rabbit;
 
-public class RabbitMqProducer
+public class RabbitMqProducer : IMessageProducer
 {
     private readonly RabbitMqConnection _rabbitConexao;
     private readonly ILogger<RabbitMqProducer> _logger;

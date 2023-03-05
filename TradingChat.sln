@@ -50,6 +50,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ExternalService
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatCommandBot.Commands", "src\TradingChat.ChatCommandBot.Contracts\TradingChat.ChatCommandBot.Commands.csproj", "{68C4C09B-CC24-4181-892A-3DF0D045EEBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.Core.Rabbit", "src\TradingChat.Core.Rabbit\TradingChat.Core.Rabbit.csproj", "{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{68C4C09B-CC24-4181-892A-3DF0D045EEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68C4C09B-CC24-4181-892A-3DF0D045EEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68C4C09B-CC24-4181-892A-3DF0D045EEBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{A352F572-9078-4F02-BD3E-94E98ACCDDC4} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
 		{B11A519D-B423-47E4-A2A3-181EE5453F76} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{68C4C09B-CC24-4181-892A-3DF0D045EEBE} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
+		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0} = {C952688C-692B-4DAC-B1D9-C7C846EDB469}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03FDF07B-F6F9-40DD-A105-006D82B293B8}

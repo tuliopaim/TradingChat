@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TradingChat.Application.Abstractions;
 using TradingChat.Application.UseCases.Shared;
+using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
-using TradingChat.Core.Messaging.Messages;
 using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Entities;
 using TradingChat.Domain.Shared;
@@ -13,16 +13,16 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand, Cha
 {
     private readonly ICurrentUser _currentUser;
     private readonly IChatRoomRepository _chatRoomRepository;
-    private readonly RabbitMqProducer _rabbitProducer;
+    private readonly IMessageProducer _messageProducer;
 
     public SendMessageCommandHandler(
         ICurrentUser currentUser,
         IChatRoomRepository chatRoomRepository,
-        RabbitMqProducer rabbitProducer)
+        IMessageProducer messageProducer)
     {
         _currentUser = currentUser;
         _chatRoomRepository = chatRoomRepository;
-        _rabbitProducer = rabbitProducer;
+        _messageProducer = messageProducer;
     }
 
     public async Task<Result<ChatMessageInfoDto>> Handle(
@@ -77,7 +77,7 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand, Cha
             ChatRoomId = message.ChatRoomId
         };
 
-        _rabbitProducer.Publish(chatCommandMessage, RabbitRoutingKeys.ChatCommand);
+        _messageProducer.Publish(chatCommandMessage, QueueNames.ChatCommand);
     }
 
     private static Result<ChatMessageInfoDto> CreateChatMessageDto(

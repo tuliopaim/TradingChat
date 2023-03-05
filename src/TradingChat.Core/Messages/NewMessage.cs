@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TradingChat.Core.Messaging.Messages;
+namespace TradingChat.Core.Messages;
 
-public class ChatCommandMessage
+public class NewMessage
 {
     [JsonPropertyName("message")]
     public string Message { get; set; }

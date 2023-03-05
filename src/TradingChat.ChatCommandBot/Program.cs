@@ -1,15 +1,17 @@
 using RabbitMQ.Client;
 using TradingChat.ChatCommandBot;
-using TradingChat.ChatCommandBot.Commands.ChatMessageCommands.StockPrice;
-using TradingChat.ChatCommandBot.Commands.ChatMessageCommands;
 using TradingChat.ChatCommandBot.Commands.Contracts;
-using TradingChat.Core.Messaging;
 using TradingChat.ExternalService.Stooq;
+using TradingChat.ChatCommandBot.Commands;
+using TradingChat.ChatCommandBot.Commands.ChatMessageCommands;
+using TradingChat.Core.Rabbit;
+using TradingChat.Core.Messaging;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostBuilder, services) =>
     {
         Inject(services, hostBuilder.Configuration);
+
         services.AddHostedService<MessageCommandConsumer>();
     })
     .Build();
@@ -52,6 +54,7 @@ static void InjectRabbit(IServiceCollection services, IConfiguration configurati
         });
 
     services.AddSingleton<RabbitMqConnection>();
+    services.AddSingleton<IQueueConsumer, RabbitMqConsumer>();
 
-    services.AddScoped<RabbitMqProducer>();
+    services.AddScoped<IMessageProducer, RabbitMqProducer>();
 }

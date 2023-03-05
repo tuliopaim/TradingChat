@@ -1,26 +1,28 @@
 ﻿using TradingChat.ChatCommandBot.Commands.Contracts;
+using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
-using TradingChat.Core.Messaging.Messages;
 using TradingChat.Domain.Shared;
 
-namespace TradingChat.ChatCommandBot.Commands.ChatMessageCommands.StockPrice;
+namespace TradingChat.ChatCommandBot.Commands.ChatMessageCommands;
 
 public class StockPriceCommand : IChatMessageCommand
 {
-    private readonly RabbitMqProducer _rabbitMqProducer;
+    private readonly IMessageProducer _messageProducer;
     private readonly IStockPriceService _stockPriceService;
 
+    private const string _stockCommand = "/stock=";
+
     public StockPriceCommand(
-        RabbitMqProducer rabbitMqProducer,
+        IMessageProducer messageProducer,
         IStockPriceService stockPriceService)
     {
-        _rabbitMqProducer = rabbitMqProducer;
+        _messageProducer = messageProducer;
         _stockPriceService = stockPriceService;
     }
 
     public bool CanExecute(string message)
     {
-        return message.StartsWith("/stock=");
+        return message.StartsWith(_stockCommand);
     }
 
     public async Task<Result> ExecuteAsync(string message, Guid chatId)
@@ -52,11 +54,11 @@ public class StockPriceCommand : IChatMessageCommand
             responseMessage = $"Unable to retrieve stock data for symbol {stockCode}. Please try again later.";
         }
 
-        _rabbitMqProducer.Publish(new NewMessage
+        _messageProducer.Publish(new NewMessage
         {
             Message = responseMessage,
             ChatRoomId = chatId
-        }, RabbitRoutingKeys.ChatMessage);
+        }, QueueNames.ChatMessage);
 
         return Result.Success();
     }

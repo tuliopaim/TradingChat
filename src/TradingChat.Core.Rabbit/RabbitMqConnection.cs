@@ -2,7 +2,7 @@
 using Polly.Retry;
 using RabbitMQ.Client;
 
-namespace TradingChat.Core.Messaging;
+namespace TradingChat.Core.Rabbit;
 
 public class RabbitMqConnection
 {
