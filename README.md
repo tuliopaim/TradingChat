@@ -7,8 +7,8 @@
 - [ ] ChatRoom
 	- [x] Create and List
 	- [x] Join Chat
-	- [ ] Send and receive messages with SignalR
+	- [x] Send and receive messages with SignalR
 	- [ ] Enqueue trading command
 - [ ] Trading Bot
 	- [ ] Rabbit consumer
-	- [ ] Csv parser
+	- [x] Get stock price 
