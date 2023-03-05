@@ -71,7 +71,11 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand, Cha
 
     private void PublishChatCommandMessage(ChatMessage message)
     {
-        var chatCommandMessage = new ChatCommandMessage(message.Message, message.ChatRoomId);
+        var chatCommandMessage = new ChatCommandMessage 
+        {
+            Message = message.Message,
+            ChatRoomId = message.ChatRoomId
+        };
 
         _rabbitProducer.Publish(chatCommandMessage, RabbitRoutingKeys.ChatCommand);
     }

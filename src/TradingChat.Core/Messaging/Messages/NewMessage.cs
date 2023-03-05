@@ -2,7 +2,7 @@
 
 namespace TradingChat.Core.Messaging.Messages;
 
-public class ChatCommandMessage
+public class NewMessage
 {
     [JsonPropertyName("message")]
     public string Message { get; set; }
