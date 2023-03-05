@@ -1,11 +1,13 @@
-﻿using TradingChat.Application.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using TradingChat.Application.Abstractions;
+using TradingChat.Application.UseCases.Shared;
 using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Entities;
 using TradingChat.Domain.Shared;
 
 namespace TradingChat.Application.UseCases.SendMessage;
 
-public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand>
+public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand, ChatMessageInfoDto>
 {
     private readonly ICurrentUser _currentUser;
     private readonly IChatRoomRepository _chatRoomRepository;
@@ -18,18 +20,26 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand>
         _chatRoomRepository = chatRoomRepository;
     }
 
-    public async Task<Result> Handle(SendMessageCommand request, CancellationToken cancellationToken)
+    public async Task<Result<ChatMessageInfoDto>> Handle(
+        SendMessageCommand request,
+        CancellationToken cancellationToken)
     {
-        var chatRoom = await _chatRoomRepository.GetWithUsersAsTracking(request.ChatRoomId);
+        var userId = _currentUser.Id!.Value;
+
+        var chatRoom = await _chatRoomRepository.Get()
+            .Where(x => x.Id == request.ChatRoomId)
+            .Include(x => x.Users.Where(u => u.ChatUserId == userId))
+                .ThenInclude(u => u.ChatUser)
+             .FirstOrDefaultAsync(cancellationToken);
 
         if (chatRoom is null)
         {
-            return Result.WithError("Chat Room not found!");
+            return new Error("Chat Room not found!");
         }
 
-        if (!chatRoom.ContainsUser(_currentUser.Id!.Value))
+        if (!chatRoom.ContainsUser(userId))
         {
-            return Result.WithError("User not allowed to send messages!");
+            return new Error("User not allowed to send messages!");
         }
         
         var message = new ChatMessage(
@@ -41,6 +51,14 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand>
 
         await _chatRoomRepository.SaveChangesAsync(cancellationToken);
 
-        return Result.Success();
+        var chatMessageDto = new ChatMessageInfoDto 
+        {
+            Id = message.Id,
+            Message = message.Message,
+            SentAt = message.SentAt,
+            User = chatRoom.Users.First(u => u.ChatUserId == userId)!.ChatUser!.Name,
+        };
+
+        return chatMessageDto;
     }
 }

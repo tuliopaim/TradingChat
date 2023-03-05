@@ -1,7 +1,12 @@
 ﻿using TradingChat.Application.Abstractions;
+using TradingChat.Application.UseCases.Shared;
 
 namespace TradingChat.Application.UseCases.SendMessage;
 
-public record SendMessageCommand(
-    Guid ChatRoomId,
-    string Message) : ICommand;
+public class SendMessageCommand : ICommand<ChatMessageInfoDto>
+{
+    public Guid ChatRoomId { get; set; }
+
+    public string Message { get; set; } = "";
+}
+
