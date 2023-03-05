@@ -9,10 +9,10 @@ builder.AddSerilog();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuth().AddDbContext(builder.Configuration);
+builder.Services.AddAuth();
 
 builder.Services.AddSignalR();
-builder.Services.InjectServices();
+builder.Services.InjectApiServices(builder.Configuration);
 
 var app = builder.Build();
 
