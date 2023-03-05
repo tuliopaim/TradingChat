@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client;
 using TradingChat.Application;
 using TradingChat.Application.Abstractions;
 using TradingChat.Application.Pipelines;
@@ -83,11 +84,27 @@ public static class IoC
             this IServiceCollection services,
             IConfiguration configuration)
     {
-        services.AddSingleton<RabbitMqConnection>();
-        services.AddScoped<RabbitMqProducer>();
-        services.Configure<RabbitMqSettings>(
-            configuration.GetSection(nameof(RabbitMqSettings)));
+        var configurationSection = configuration.GetSection(nameof(RabbitMqSettings))!;
 
+        var rabbitSettings = configurationSection.Get<RabbitMqSettings>()!;
+
+        services.Configure<RabbitMqSettings>(configurationSection);
+
+        services.AddSingleton<IConnectionFactory>(x => 
+            new ConnectionFactory
+            {
+                HostName = rabbitSettings.HostName,
+                Port = rabbitSettings.Port,
+                UserName = rabbitSettings.UserName,
+                Password = rabbitSettings.Password,
+                DispatchConsumersAsync = true,
+                ConsumerDispatchConcurrency = 1,
+                UseBackgroundThreadsForIO = false
+            });
+
+        services.AddSingleton<RabbitMqConnection>();
+
+        services.AddScoped<RabbitMqProducer>();
         return services;
     }
 }

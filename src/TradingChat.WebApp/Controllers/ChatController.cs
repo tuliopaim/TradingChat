@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading;
 using TradingChat.Application.UseCases.CreateChatRoom;
 using TradingChat.Application.UseCases.GetChatMessages;
 using TradingChat.Application.UseCases.GetChatsInfo;
