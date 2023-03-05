@@ -1,4 +1,5 @@
 using TradingChat.Infrastructure;
+using TradingChat.Infrastructure.Messaging;
 using TradingChat.WebApp.Configurations;
 using TradingChat.WebApp.Hubs;
 
@@ -15,6 +16,8 @@ builder.Services.AddSignalR();
 builder.Services.InjectApiServices(builder.Configuration);
 
 var app = builder.Build();
+
+await new QueueCreator(app.Services).CreateQueues();
 
 if (app.Environment.IsDevelopment())
 {
