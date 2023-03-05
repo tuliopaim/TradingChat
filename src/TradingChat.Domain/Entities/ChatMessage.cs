@@ -26,4 +26,6 @@ public class ChatMessage
     
     public Guid ChatRoomId { get; private set; }
     public ChatRoom? ChatRoom { get; private set; }
+
+    public bool IsCommand => Message.StartsWith('/');
 }
