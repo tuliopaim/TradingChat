@@ -1,4 +1,4 @@
-namespace TradingChat.Core.Messaging;
+namespace TradingChat.Core.Rabbit;
 
 public class RabbitMqSettings
 {

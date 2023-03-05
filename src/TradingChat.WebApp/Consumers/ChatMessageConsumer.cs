@@ -1,41 +1,37 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
-using RabbitMQ.Client.Events;
 using TradingChat.Application.UseCases.SendMessageFromServer;
+using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
-using TradingChat.Core.Messaging.Messages;
 using TradingChat.WebApp.Hubs;
 
 namespace TradingChat.WebApp.Consumers;
 
-public class ChatMessageConsumer : RabbitMqConsumerBase
+public class ChatMessageConsumer : QueueConsumerBackgroundService<NewMessage>
 {
     private readonly IHubContext<ChatHub> _chatHubContext;
     private readonly IServiceProvider _serviceProvider;
 
     public ChatMessageConsumer(
-        RabbitMqConnection rabbitConnection,
-        IHubContext<ChatHub> chatHubContext,
+        ILogger<ChatMessageConsumer> logger,
+        IQueueConsumer consumer,
         IServiceProvider serviceProvider,
-        ILogger<RabbitMqConsumerBase> logger)
-        : base(rabbitConnection, logger, RabbitRoutingKeys.ChatMessage)
+        IHubContext<ChatHub> chatHubContext) : base(logger, consumer, QueueNames.ChatMessage)
     {
-        _chatHubContext = chatHubContext;
         _serviceProvider = serviceProvider;
+        _chatHubContext = chatHubContext;
     }
 
-    protected override async Task<bool> HandleMessage(BasicDeliverEventArgs rabbitEventArgs)
+    protected override async Task<bool> HandleMessage(NewMessage message)
     {
-        var newMessage = rabbitEventArgs.GetDeserializedMessage<NewMessage>();
-        
         using var scope = _serviceProvider.CreateScope();
 
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
         var command = new SendMessageFromServerCommand
         {
-            ChatRoomId = newMessage.ChatRoomId,
-            Message = newMessage.Message,
+            ChatRoomId = message.ChatRoomId,
+            Message = message.Message,
         };
 
         var result = await mediator.Send(command);
@@ -43,7 +39,7 @@ public class ChatMessageConsumer : RabbitMqConsumerBase
         if (!result.IsSuccess) return false;
 
         await _chatHubContext.Clients
-            .Group(newMessage.ChatRoomId.ToString())
+            .Group(message.ChatRoomId.ToString())
             .SendAsync("ReceiveMessage", result.Value);
 
         return true;

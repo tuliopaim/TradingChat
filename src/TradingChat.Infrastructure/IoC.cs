@@ -8,6 +8,7 @@ using TradingChat.Application;
 using TradingChat.Application.Abstractions;
 using TradingChat.Application.Pipelines;
 using TradingChat.Core.Messaging;
+using TradingChat.Core.Rabbit;
 using TradingChat.Domain.Contracts;
 using TradingChat.Infrastructure.Context;
 using TradingChat.Infrastructure.Repositories;
@@ -103,8 +104,10 @@ public static class IoC
             });
 
         services.AddSingleton<RabbitMqConnection>();
+        services.AddSingleton<IQueueConsumer, RabbitMqConsumer>();
 
-        services.AddScoped<RabbitMqProducer>();
+        services.AddScoped<IMessageProducer, RabbitMqProducer>();
+
         return services;
     }
 }

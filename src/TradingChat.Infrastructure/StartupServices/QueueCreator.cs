@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using TradingChat.Core.Messaging;
+using TradingChat.Core.Rabbit;
 
 namespace TradingChat.Infrastructure.StartupServices;
 
@@ -33,7 +34,7 @@ public class QueueCreator
 
         using var channel = rabbitConnection.Connection.CreateModel();
 
-        foreach (var routingKey in RabbitRoutingKeys.All)
+        foreach (var routingKey in QueueNames.All)
         {
             channel.QueueDeclare(queue: routingKey,
                durable: true,

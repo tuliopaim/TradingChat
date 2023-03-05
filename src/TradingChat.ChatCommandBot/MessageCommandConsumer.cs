@@ -1,34 +1,27 @@
-using RabbitMQ.Client.Events;
-using TradingChat.ChatCommandBot.Commands.ChatMessageCommands;
+using TradingChat.ChatCommandBot.Commands;
+using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
-using TradingChat.Core.Messaging.Messages;
 
 namespace TradingChat.ChatCommandBot;
 
-public class MessageCommandConsumer : RabbitMqConsumerBase
+public class MessageCommandConsumer : QueueConsumerBackgroundService<ChatCommandMessage>
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<MessageCommandConsumer> _logger;
 
     public MessageCommandConsumer(
-        RabbitMqConnection rabbitConnection,
+        ILogger<MessageCommandConsumer> logger,
         IServiceProvider serviceProvider,
-        ILogger<MessageCommandConsumer> logger) 
-        : base(rabbitConnection, logger, RabbitRoutingKeys.ChatCommand)
+        IQueueConsumer consumer) : base(logger, consumer, QueueNames.ChatCommand)
     {
         _serviceProvider = serviceProvider;
-        _logger = logger;
     }
 
-    protected override async Task<bool> HandleMessage(BasicDeliverEventArgs rabbitEventArgs)
+    protected override async Task<bool> HandleMessage(ChatCommandMessage message)
     {
-        var chatCommandMessage = rabbitEventArgs.GetDeserializedMessage<ChatCommandMessage>();
-
         using var scope = _serviceProvider.CreateScope();
         var commandInvoker = scope.ServiceProvider.GetRequiredService<ChatMessageCommandInvoker>();
 
-        var result = await commandInvoker
-            .ExecuteCommandAsync(chatCommandMessage.Message, chatCommandMessage.ChatRoomId);
+        var result = await commandInvoker.ExecuteCommandAsync(message.Message, message.ChatRoomId);
 
         return true;
     }
