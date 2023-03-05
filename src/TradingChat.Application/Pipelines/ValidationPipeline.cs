@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using TradingChat.Domain.Shared;
+using TradingChat.Core;
 
 namespace TradingChat.Application.Pipelines;
 

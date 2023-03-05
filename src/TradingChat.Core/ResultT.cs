@@ -1,4 +1,4 @@
-﻿namespace TradingChat.Domain.Shared;
+﻿namespace TradingChat.Core;
 
 public class Result<TValue> : Result
 {

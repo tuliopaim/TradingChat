@@ -24,7 +24,6 @@
     <ProjectReference Include="..\TradingChat.ChatCommandBot.Contracts\TradingChat.ChatCommandBot.Commands.csproj" />
     <ProjectReference Include="..\TradingChat.Core.Rabbit\TradingChat.Core.Rabbit.csproj" />
     <ProjectReference Include="..\TradingChat.Core\TradingChat.Core.csproj" />
-    <ProjectReference Include="..\TradingChat.Domain\TradingChat.Domain.csproj" />
     <ProjectReference Include="..\TradingChat.ExternalService.Stooq\TradingChat.ExternalService.Stooq.csproj" />
   </ItemGroup>
 </Project>

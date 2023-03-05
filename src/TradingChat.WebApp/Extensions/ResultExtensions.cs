@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using TradingChat.Domain.Shared;
+using TradingChat.Core;
 
 namespace TradingChat.WebApp.Extensions;
 
