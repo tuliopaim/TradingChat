@@ -1,10 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 using TradingChat.Application.UseCases.CreateChatRoom;
+using TradingChat.Application.UseCases.GetChatMessages;
 using TradingChat.Application.UseCases.GetChatsInfo;
 using TradingChat.Application.UseCases.JoinChatRoom;
 using TradingChat.Application.UseCases.SendMessage;
+using TradingChat.Application.UseCases.Shared;
 using TradingChat.Domain.Shared;
 using TradingChat.WebApp.Extensions;
 
@@ -67,16 +70,23 @@ public class ChatController : Controller
 
     [HttpGet("/Chat/{chatId:Guid}")]
     [Authorize]
-    public IActionResult Chat(Guid chatId)
+    public async Task<IActionResult> Chat(
+        [FromServices] IMediator mediator,
+        Guid chatId,
+        CancellationToken cancellationToken)
     {
-        return View(chatId);
+        Result<ChatMessagesDto> result = await mediator.Send(
+            new GetChatMessagesQuery(chatId),
+            cancellationToken);
+
+        return View(result.Value);
     }
 
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> SendMessage(
        [FromServices] IMediator mediator,
-       SendMessageCommand command)
+       [FromBody]SendMessageCommand command)
     {
         Result result = await mediator.Send(command);
     
