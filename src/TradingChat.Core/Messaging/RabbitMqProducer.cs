@@ -1,6 +1,6 @@
 ﻿using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RabbitMQ.Client;
 
 namespace TradingChat.Core.Messaging;
@@ -22,9 +22,9 @@ public class RabbitMqProducer
 
     public bool Publish<TMessage>(TMessage message, string routingKey)
     {
-        var serializedMessage = JsonConvert.SerializeObject(message);
+        var serializedMessage = JsonSerializer.Serialize(message);
 
-        return PublishMessage(JsonConvert.SerializeObject(serializedMessage), routingKey);
+        return PublishMessage(serializedMessage, routingKey);
     }
 
     private bool PublishMessage(string serializedMessage, string routingKey)

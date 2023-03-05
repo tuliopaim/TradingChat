@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using RabbitMQ.Client.Events;
+﻿using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using System.Text;
+using System.Text.Json;
 
 namespace TradingChat.Core.Messaging;
 
@@ -9,7 +9,13 @@ public static class RabbitMqExtensions
 {
     public static T GetDeserializedMessage<T>(this BasicDeliverEventArgs rabbitEventArgs)
     {
-        return JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(rabbitEventArgs.Body.Span));
+        var messageBody = GetMessageBody(rabbitEventArgs);
+        return JsonSerializer.Deserialize<T>(messageBody)!;
+    }
+
+    private static string GetMessageBody(this BasicDeliverEventArgs rabbitEventArgs)
+    {
+        return Encoding.UTF8.GetString(rabbitEventArgs.Body.Span);
     }
 
     public static int? GetRetryCount(this IBasicProperties properties)

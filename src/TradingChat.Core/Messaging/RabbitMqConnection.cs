@@ -1,34 +1,45 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Polly;
+using Polly.Retry;
 using RabbitMQ.Client;
 
 namespace TradingChat.Core.Messaging;
 
 public class RabbitMqConnection
 {
-    private readonly RabbitMqSettings _rabbitSettings;
-    private readonly Lazy<IConnection> _lazyConnection;
+    private readonly IConnectionFactory _factory;
 
-    public RabbitMqConnection(IOptions<RabbitMqSettings> rabbitSettings)
+    private static readonly object _connectionLocker = new();
+
+    public RabbitMqConnection(IConnectionFactory factory)
     {
-        _lazyConnection = new(CriarConexao);
-        _rabbitSettings = rabbitSettings.Value;
+        _factory = factory;
+        _connection = GetConnection();
     }
 
-    public IConnection Connection => _lazyConnection.Value;
+    private IConnection _connection;
+    public IConnection Connection => _retryPolicy.Execute(GetConnection);
 
-    private IConnection CriarConexao()
+    private IConnection GetConnection()
     {
-        IConnectionFactory factory = new ConnectionFactory
+        if (_connection is { IsOpen: true }) return _connection;
+        lock (_connectionLocker)
         {
-            HostName = _rabbitSettings.HostName,
-            Port = _rabbitSettings.Port,
-            UserName = _rabbitSettings.UserName,
-            Password = _rabbitSettings.Password,
-            DispatchConsumersAsync = true,
-            ConsumerDispatchConcurrency = 1,
-            UseBackgroundThreadsForIO = false
-        };
+            if (_connection is { IsOpen: true }) return _connection;
+            _connection?.Dispose();
+            _connection = _factory.CreateConnection();
 
-        return factory.CreateConnection();
+            return _connection;
+        }
     }
+
+    private static readonly IEnumerable<TimeSpan> _sleepsBetweenRetries = new List<TimeSpan>
+    {
+        TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2),
+        TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(5),
+        TimeSpan.FromSeconds(8),
+    };
+
+    private readonly RetryPolicy _retryPolicy = Policy
+        .Handle<Exception>()
+        .WaitAndRetry(sleepDurations: _sleepsBetweenRetries);
 }
