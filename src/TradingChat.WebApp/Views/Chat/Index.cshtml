@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-8 mx-auto">
+        <div class="col-12 col-md-8 mx-auto">
             <div class="text-center">
                 <h1 class="display-4">Chats</h1>
             </div>
@@ -14,87 +14,45 @@
             <a asp-action="Create" class="btn btn-primary">Create new Chat</a>
             <hr />
             <div asp-validation-summary="All" id="validation-summary" class="text-danger" role="alert"></div>
-            <div class="container">
-                <div class="row">
-                    @foreach (var chat in Model.Chats)
-                    {
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-body">
+            <div class="row">
+                @foreach (var chat in Model.Chats)
+                {
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4">
+                        <div class="card card-wrapper">
+                            <div class="card-body">
+                                <div class="card-title-wrapper">
                                     <h5 class="card-title">@chat.Name</h5>
-                                    <p class="card-text">Users: @chat.NumberOfUsers / @chat.MaxNumberOfUsers</p>
-                                    <p class="card-text">Owner: @chat.Owner</p>
-                                    <form class="join-chat-form" action="@Url.Action("JoinChat", "Chat")" method="post">
-                                        <input type="hidden" name="chatId" value="@chat.Id" />
-                                        <button type="submit" class="btn btn-primary">Join chat</button>
-                                    </form>
+                                    <hr class="mt-0 mb-2">
                                 </div>
+                                <div class="card-info mt-auto">
+                                    <p class="card-text">
+                                        <span class="font-weight-bold">By:</span>
+                                        @chat.Owner
+                                    </p>
+                                    <p class="card-text">
+                                        <span class="font-weight-bold">Users:</span>
+                                        @chat.NumberOfUsers / @chat.MaxNumberOfUsers
+                                    </p>
+                                </div>
+                                <form class="join-chat-form" action="@Url.Action("JoinChat", "Chat")" method="post">
+                                    <input type="hidden" name="chatId" value="@chat.Id" />
+                                    <button type="submit" class="btn btn-primary">Join chat</button>
+                                </form>
                             </div>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
 
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/chat/index.css" />
+}
+
 @section Scripts {
-    <script>
-        $(function() {
-            $(".join-chat-form").submit(function(e) {
-                e.preventDefault();
-
-                var form = $(this);
-
-                var request = $.ajax({
-                    url: form.attr("action"),
-                    type: "POST",
-                    data: form.serialize(),
-                });
-
-                var summary = $("#validation-summary > ul");
-
-                request.then(handleSuccess)
-                    .catch(function (xhr) { handleBadRequest(xhr, summary); })
-                    .catch(function () { handleOtherError(summary); })
-                    .catch(function () { handleNetworkError(summary); });
-            });
-        });
-
-        function handleSuccess(response) {
-            window.location.href = "/Chat/" + response;
-        }
-
-        function handleBadRequest(xhr, summary) {
-            if (xhr.status === 400) {
-                showError(xhr.responseJSON.errors, summary);
-            } else {
-                showError(["An error occurred while joining the chat."]);
-            }
-        }
-
-        function handleOtherError(summary) {
-            showError(["An error occurred while joining the chat."], summary);
-        }
-
-        function handleNetworkError(summary) {
-            summary.html("An error occurred while joining the chat.", summary);
-        }
-
-        function showError(errors, summary)
-        {
-            summary.fadeOut(200, function () {
-
-                summary.empty();
-
-                errors.forEach(function (error) {
-                    summary.append($('<li>').text(error));
-                });
-
-                summary.fadeIn(400);
-            });
-
-        }
-    </script>
+    <script src="~/js/chat/index.js"></script>
 }
 

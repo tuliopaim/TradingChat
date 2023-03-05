@@ -52,11 +52,12 @@
 .message-input {
     flex: 1; /* take up remaining space */
     resize: none; /* disable textarea resize */
-    padding: 5px;
+    padding: 10px;
     margin-right: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     height: 80px; /* set a fixed height */
+    font-size: 1.5em;
 }
 
 .send-message-button {

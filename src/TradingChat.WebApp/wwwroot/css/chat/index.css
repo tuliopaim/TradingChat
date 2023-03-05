@@ -1,0 +1,25 @@
+﻿.font-weight-bold {
+    font-weight: bold;
+}
+
+.card-info {
+    font-size: 0.85em;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+    .card-info p {
+        margin-bottom: 5px;
+    }
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-title {
+    max-height: 2.8rem;
+    overflow: hidden;
+}
