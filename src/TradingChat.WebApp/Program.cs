@@ -1,5 +1,5 @@
 using TradingChat.Infrastructure;
-using TradingChat.Infrastructure.Messaging;
+using TradingChat.Infrastructure.StartupServices;
 using TradingChat.WebApp.Configurations;
 using TradingChat.WebApp.Hubs;
 
@@ -18,6 +18,7 @@ builder.Services.InjectApiServices(builder.Configuration);
 var app = builder.Build();
 
 await new QueueCreator(app.Services).CreateQueues();
+await new AdminUserCreator(app.Configuration, app.Services).Create();
 
 if (app.Environment.IsDevelopment())
 {

@@ -23,4 +23,14 @@ public class ChatUser
 
     private readonly List<ChatRoomUser> _chats = new();
     public virtual IReadOnlyList<ChatRoomUser>? Chats => _chats.AsReadOnly();
+
+    public static ChatUser AdminChatUser()
+    {
+        return new ChatUser
+        {
+            Id = new Guid("63424FA2-0161-4DCA-ADD5-FA1386E91B8C"),
+            Name = "Admin",
+            IdentityUserId = new Guid("63424FA2-0161-4DCA-ADD5-FA1386E91B8C"),
+        };
+    }
 }
