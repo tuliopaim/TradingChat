@@ -1,6 +1,10 @@
 ﻿@using TradingChat.Application.UseCases.Shared;
 @model ChatMessagesDto
 
+@{
+    ViewData["Title"] = Model.Name;
+}
+
 <h1>@Model.Name</h1>
 <input type="hidden" id="chat-id" value="@Model.ChatRoomId" />
 

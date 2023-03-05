@@ -1,5 +1,7 @@
 ﻿
 $(function(){
+    scrollMessagesDown();
+
     var connection = new signalR.HubConnectionBuilder()
         .withUrl("/Chat/Hub")
         .build();
@@ -17,9 +19,13 @@ $(function(){
 
         $(".chat-messages").append(messageHtml);
 
-        $(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
+        scrollMessagesDown();
     });
 
+    function scrollMessagesDown() {
+        $(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
+    }
+    
     connection.start().then(function () {
         let chatId = $("#chat-id").val();
         connection.invoke("JoinChat", chatId)
