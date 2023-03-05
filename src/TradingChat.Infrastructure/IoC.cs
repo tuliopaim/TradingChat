@@ -5,22 +5,36 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TradingChat.Application;
 using TradingChat.Application.Abstractions;
+using TradingChat.Application.Contracts;
 using TradingChat.Application.Pipelines;
 using TradingChat.Domain.Contracts;
 using TradingChat.Infrastructure.Context;
 using TradingChat.Infrastructure.Repositories;
+using TradingChat.Infrastructure.Stooq;
 
 namespace TradingChat.Infrastructure;
 
 public static class IoC
 {
-    public static IServiceCollection InjectServices(this IServiceCollection services)
+    public static IServiceCollection InjectApiServices(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         return services
             .AddScoped<ICurrentUser, CurrentUser>()
+            .AddDbContext(configuration)
             .AddValidators()
             .AddMediator()
             .AddRepositories();
+    }
+
+    public static IServiceCollection InjectBotServices(
+        this IServiceCollection services)
+    {
+        return services
+            .AddValidators()
+            .AddMediator()
+            .AddStockPriceService();
     }
 
     public static IServiceCollection AddDbContext(
@@ -64,5 +78,15 @@ public static class IoC
         return services
             .AddScoped<IChatRoomRepository, ChatRoomRepository>()
             .AddScoped<IChatUserRepository, ChatUserRepository>();
+    }
+
+    public static IServiceCollection AddStockPriceService(
+        this IServiceCollection services)
+    {
+        services.AddHttpClient<StooqClient>();
+
+        services.AddScoped<IStockPriceService, StooqService>();
+
+        return services;
     }
 }

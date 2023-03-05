@@ -32,7 +32,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Infrastructure"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{2F6E8D58-A1AB-4795-9793-AA6FCCAB01BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.Application", "src\TradingChat.Application\TradingChat.Application.csproj", "{7495DF46-8B52-4C57-9052-388E5E453631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Application", "src\TradingChat.Application\TradingChat.Application.csproj", "{7495DF46-8B52-4C57-9052-388E5E453631}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.Infrastructure.Stooq", "src\TradingChat.Infrastructure.Stooq\TradingChat.Infrastructure.Stooq.csproj", "{E9C059B6-9578-4551-A329-4D32405F7B90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.Infrastructure.Stooq.Tests", "src\TradingChat.Infrastructure.Stooq.Tests\TradingChat.Infrastructure.Stooq.Tests.csproj", "{4C9A5D8B-B651-47E6-AE2C-D50BAB55C2D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +60,14 @@ Global
 		{7495DF46-8B52-4C57-9052-388E5E453631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7495DF46-8B52-4C57-9052-388E5E453631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7495DF46-8B52-4C57-9052-388E5E453631}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9C059B6-9578-4551-A329-4D32405F7B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9C059B6-9578-4551-A329-4D32405F7B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9C059B6-9578-4551-A329-4D32405F7B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9C059B6-9578-4551-A329-4D32405F7B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9A5D8B-B651-47E6-AE2C-D50BAB55C2D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9A5D8B-B651-47E6-AE2C-D50BAB55C2D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9A5D8B-B651-47E6-AE2C-D50BAB55C2D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9A5D8B-B651-47E6-AE2C-D50BAB55C2D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +81,8 @@ Global
 		{3207E1EF-F8F3-4CB1-A6D5-B353C2B796E9} = {2DC5F2F3-EF8D-4F7C-BEBA-ABA0F5A46027}
 		{2F6E8D58-A1AB-4795-9793-AA6FCCAB01BE} = {498F2742-E33E-4718-BBD3-FFC4D13A67FB}
 		{7495DF46-8B52-4C57-9052-388E5E453631} = {2F6E8D58-A1AB-4795-9793-AA6FCCAB01BE}
+		{E9C059B6-9578-4551-A329-4D32405F7B90} = {2DC5F2F3-EF8D-4F7C-BEBA-ABA0F5A46027}
+		{4C9A5D8B-B651-47E6-AE2C-D50BAB55C2D9} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03FDF07B-F6F9-40DD-A105-006D82B293B8}

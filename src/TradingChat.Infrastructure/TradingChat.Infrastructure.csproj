@@ -14,6 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.3" />
   </ItemGroup>
@@ -21,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TradingChat.Application\TradingChat.Application.csproj" />
     <ProjectReference Include="..\TradingChat.Domain\TradingChat.Domain.csproj" />
+    <ProjectReference Include="..\TradingChat.Infrastructure.Stooq\TradingChat.Infrastructure.Stooq.csproj" />
   </ItemGroup>
 
 </Project>
