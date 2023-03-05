@@ -1,6 +1,7 @@
 using TradingChat.Infrastructure;
 using TradingChat.Infrastructure.StartupServices;
 using TradingChat.WebApp.Configurations;
+using TradingChat.WebApp.Consumers;
 using TradingChat.WebApp.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddAuth();
 
 builder.Services.AddSignalR();
 builder.Services.InjectApiServices(builder.Configuration);
+builder.Services.AddHostedService<ChatMessageConsumer>();
 
 var app = builder.Build();
 
