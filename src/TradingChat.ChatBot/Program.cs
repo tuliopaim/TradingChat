@@ -10,6 +10,12 @@ using TradingChat.ChatBot.Commands.Contracts;
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostBuilder, services) =>
     {
+        if (hostBuilder.HostingEnvironment.IsEnvironment("Internal"))
+        {
+            // wait for the environment to run
+            Task.Delay(TimeSpan.FromSeconds(10)).GetAwaiter().GetResult();
+        }
+
         Inject(services, hostBuilder.Configuration);
 
         services.AddHostedService<MessageCommandConsumer>();
