@@ -8,12 +8,12 @@ using TradingChat.Domain.Entities;
 
 namespace TradingChat.Infrastructure.StartupServices;
 
-public class AdminUserCreator
+public class BotUserCreator
 {
     private readonly IConfiguration _configuration;
     private readonly IServiceProvider _serviceProvider;
 
-    public AdminUserCreator(
+    public BotUserCreator(
         IConfiguration configuration,
         IServiceProvider serviceProvider)
 	{
@@ -35,25 +35,25 @@ public class AdminUserCreator
         var chatUserRepository = scope.ServiceProvider.GetRequiredService<IChatUserRepository>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser<Guid>>>();
         
-        var adminUser = ChatUser.AdminChatUser();
-        if (await chatUserRepository.GetAsNoTracking().AnyAsync(u => u.Id == adminUser.Id))
+        var botUser = ChatUser.ChatBotUser();
+        if (await chatUserRepository.GetAsNoTracking().AnyAsync(u => u.Id == botUser.Id))
         {
             return;
         }
 
-        var adminEmail = _configuration["AdminUser:Email"]!;
-        var adminPass = _configuration["AdminUser:Password"]!;
+        var adminEmail = _configuration["BotUser:Email"]!;
+        var adminPass = _configuration["BotUser:Password"]!;
 
         var identityUser = new IdentityUser<Guid>
         {
-            Id = adminUser.Id,
+            Id = botUser.Id,
             UserName = adminEmail,
             Email = adminEmail,
         };
 
         var result = await userManager.CreateAsync(identityUser, adminPass);
 
-        chatUserRepository.Add(adminUser);
+        chatUserRepository.Add(botUser);
 
         await chatUserRepository.SaveChangesAsync(default);
     }

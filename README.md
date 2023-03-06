@@ -4,11 +4,13 @@
 
 - [x] Docker Compose with Postgres and Rabbit
 - [x] MVC WebApp with Identity and Seq
-- [ ] ChatRoom
+- [x] ChatRoom
 	- [x] Create and List
 	- [x] Join Chat
 	- [x] Send and receive messages with SignalR
-	- [ ] Enqueue trading command
-- [ ] Trading Bot
-	- [ ] Rabbit consumer
-	- [x] Get stock price 
+- [x] Trading Bot
+	- [x] Rabbit Structure
+	- [x] Get stock price in Stooq 
+	- [x] Easy multiple ChatCommands support
+- [ ] Dockerize everything
+- [ ] More unit tests

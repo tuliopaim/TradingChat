@@ -20,7 +20,7 @@ builder.Services.AddHostedService<ChatMessageConsumer>();
 var app = builder.Build();
 
 await new QueueCreator(app.Services).CreateQueues();
-await new AdminUserCreator(app.Configuration, app.Services).Create();
+await new BotUserCreator(app.Configuration, app.Services).Create();
 
 if (app.Environment.IsDevelopment())
 {

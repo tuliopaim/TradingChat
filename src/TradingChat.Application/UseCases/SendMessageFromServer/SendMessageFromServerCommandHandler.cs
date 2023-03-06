@@ -28,8 +28,8 @@ public class SendMessageFromServerCommandHandler : ICommandHandler<SendMessageFr
             return new Error("Chat Room not found!");
         }
 
-        var adminUser = ChatUser.AdminChatUser();
-        var userId = adminUser.Id;
+        var botUser = ChatUser.ChatBotUser();
+        var userId = botUser.Id;
 
         var message = new ChatMessage(
             request.Message,
@@ -40,7 +40,7 @@ public class SendMessageFromServerCommandHandler : ICommandHandler<SendMessageFr
 
         await _chatRoomRepository.SaveChangesAsync(cancellationToken);
 
-        return CreateChatMessageDto(adminUser.Name, message);
+        return CreateChatMessageDto(botUser.Name, message);
     }
 
     private async Task<ChatRoom?> GetChatRoom(SendMessageFromServerCommand request, CancellationToken cancellationToken)
