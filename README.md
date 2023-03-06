@@ -6,18 +6,20 @@
 - Seq
 - RabbitMQ
 
-cd to `docker` folder in the root of the solution. 
+In the root folder of the application, run the command:
 
 ### Environment (postgres, seq)
 ```
-docker-compose -f .\docker-compose.env.yml up -d
+cd docker && docker-compose -f .\docker-compose.env.yml up -d
 ```
 
 ### Environment + WebApp + ChatBot
 
 ```
-docker-compose -f docker-compose.yml -f docker-compose.env.yml up -d --build
+cd docker && docker-compose -f docker-compose.yml -f docker-compose.env.yml up -d --build
 ```
+
+After the containers are running, access the website in [http://localhost:5010/](http://localhost:5010/)
 
 ## How it works?
 
