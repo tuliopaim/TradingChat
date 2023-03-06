@@ -162,4 +162,6 @@ ___
 	- [x] Multiple ChatCommands support
 - [x] Dockerize everything
 - [x] README
-- [ ] More unit tests
+- [x] Unit tests
+- [ ] Integration tests
+
