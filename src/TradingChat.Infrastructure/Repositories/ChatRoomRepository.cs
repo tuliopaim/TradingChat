@@ -11,6 +11,15 @@ public class ChatRoomRepository : BaseRepository<ChatRoom>, IChatRoomRepository
     {
     }
 
+    public Task<ChatRoom?> GetChatRoomToSendMessage(Guid chatRoomId, Guid userId, CancellationToken cancellationToken)
+    {
+        return Get()
+            .Where(x => x.Id == chatRoomId)
+            .Include(x => x.Users.Where(u => u.ChatUserId == userId))
+                .ThenInclude(u => u.ChatUser)
+             .FirstOrDefaultAsync(cancellationToken);
+    }
+
     public Task<ChatRoom?> GetWithUsersAsTracking(Guid chatRoomId)
     {
         return Get()

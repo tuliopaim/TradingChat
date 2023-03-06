@@ -15,8 +15,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{6FFCE5A9-E1FD-4660-8E89-2E0AE2379D7A}"
 	ProjectSection(SolutionItems) = preProject
 		docker\.env = docker\.env
-		docker\docker-compose.yml = docker\docker-compose.yml
 		docker\docker-compose.env.yml = docker\docker-compose.env.yml
+		docker\docker-compose.yml = docker\docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.WebApp", "src\TradingChat.WebApp\TradingChat.WebApp.csproj", "{03B75624-255A-4421-9D70-EE3DB46666C6}"
@@ -52,6 +52,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot.External.Stooq", "src\TradingChat.ChatBot.External.Stooq\TradingChat.ChatBot.External.Stooq.csproj", "{18A0B879-C23C-4809-AB59-1378AF03AAD8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ExternalService.Stooq.Tests", "src\TradingChat.ChatBot.External.Stooq.Tests\TradingChat.ExternalService.Stooq.Tests.csproj", "{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.Application.Tests", "src\TradingChat.Application.Tests\TradingChat.Application.Tests.csproj", "{3A89979B-252F-4C64-922A-D661CEF32695}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A89979B-252F-4C64-922A-D661CEF32695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A89979B-252F-4C64-922A-D661CEF32695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A89979B-252F-4C64-922A-D661CEF32695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A89979B-252F-4C64-922A-D661CEF32695}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +127,7 @@ Global
 		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{18A0B879-C23C-4809-AB59-1378AF03AAD8} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
+		{3A89979B-252F-4C64-922A-D661CEF32695} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03FDF07B-F6F9-40DD-A105-006D82B293B8}
