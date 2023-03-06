@@ -1,4 +1,5 @@
-﻿using TradingChat.ChatBot.Commands.Contracts;
+﻿using System.Globalization;
+using TradingChat.ChatBot.Commands.Contracts;
 using TradingChat.Core;
 using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
@@ -42,12 +43,9 @@ public class StockPriceCommand : IChatMessageCommand
         {
             var stockData = stockDataResult.Value;
 
-            responseMessage = $"Stock data for {stockData.Symbol} on {stockData.Date} at {stockData.Time}:\n" +
-                  $"Open price: {stockData.Open}\n" +
-                  $"High price: {stockData.High}\n" +
-                  $"Low price: {stockData.Low}\n" +
-                  $"Close price: {stockData.Close}\n" +
-                  $"Volume: {stockData.Volume}";
+            var formattedCloseValue = stockDataResult.Value.Close.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
+
+            responseMessage = $"{stockData.Symbol} quote is {formattedCloseValue} per share.";
         }
         else
         {
