@@ -1,68 +1,14 @@
-using RabbitMQ.Client;
-using TradingChat.Core.Rabbit;
-using TradingChat.Core.Messaging;
-using TradingChat.ChatBot.External.Stooq;
-using TradingChat.ChatBot.Commands.ChatMessageCommands;
 using TradingChat.ChatBot;
-using TradingChat.ChatBot.Commands;
-using TradingChat.ChatBot.Commands.Contracts;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((hostBuilder, services) =>
-    {
-        if (hostBuilder.HostingEnvironment.IsEnvironment("Internal"))
-        {
-            // wait for the environment to run
-            Task.Delay(TimeSpan.FromSeconds(10)).GetAwaiter().GetResult();
-        }
+var builder = WebApplication.CreateBuilder(args);
 
-        Inject(services, hostBuilder.Configuration);
+builder.AddSerilog();
 
-        services.AddHostedService<MessageCommandConsumer>();
-    })
-    .Build();
+builder.Services.InjectServices(builder.Configuration);
 
-host.Run();
+builder.Services.AddHostedService<MessageCommandConsumer>();
 
-static IServiceCollection Inject(
-    IServiceCollection services,
-    IConfiguration configuration)
-{
-    InjectRabbit(services, configuration);
+var app = builder.Build();
 
-    services.AddHttpClient<StooqClient>();
-    services.AddScoped<IStockPriceService, StooqService>();
+app.Run();
 
-    services.AddScoped<ChatMessageCommandInvoker>();
-
-    services.AddScoped<IChatMessageCommand, StockPriceCommand>();
-    services.AddScoped<IChatMessageCommand, PingPongCommand>();
-
-    return services;
-}
-
-static void InjectRabbit(IServiceCollection services, IConfiguration configuration)
-{
-    var configurationSection = configuration.GetSection(nameof(RabbitMqSettings))!;
-
-    var rabbitSettings = configurationSection.Get<RabbitMqSettings>()!;
-
-    services.Configure<RabbitMqSettings>(configurationSection);
-
-    services.AddSingleton<IConnectionFactory>(x =>
-        new ConnectionFactory
-        {
-            HostName = rabbitSettings.HostName,
-            Port = rabbitSettings.Port,
-            UserName = rabbitSettings.UserName,
-            Password = rabbitSettings.Password,
-            DispatchConsumersAsync = true,
-            ConsumerDispatchConcurrency = 1,
-            UseBackgroundThreadsForIO = false
-        });
-
-    services.AddSingleton<RabbitMqConnection>();
-    services.AddSingleton<IQueueConsumer, RabbitMqConsumer>();
-
-    services.AddScoped<IMessageProducer, RabbitMqProducer>();
-}
