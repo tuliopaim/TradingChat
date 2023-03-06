@@ -2,7 +2,7 @@
 using Moq;
 using TradingChat.Application.Abstractions;
 using TradingChat.Application.UseCases.SendMessage;
-using TradingChat.Application.UseCases.Shared;
+using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
 using TradingChat.Domain.Contracts;
 using TradingChat.Domain.Entities;
@@ -114,5 +114,39 @@ public class SendMessageTests
 
         data.Id.Should().NotBeEmpty();
         data.Message.Should().Be(request.Message);
+    }
+
+    [Fact]
+    public async Task Should_PublishMessage_WhenValidRequest_WithCommandMessage()
+    {
+        // Arrange
+        var chatRoomId = Guid.NewGuid();
+        var request = new SendMessageCommand
+        {
+            ChatRoomId = chatRoomId,
+            Message = "/stock=AAPL.US"
+        };
+
+        var userId = Guid.NewGuid();
+        var chatRoom = new ChatRoom("Test Room", 10, Guid.NewGuid()) { Id = chatRoomId };
+
+        var user = new ChatUser("John Doe", userId);
+
+        chatRoom.AddUser(userId);
+
+        _currentUserMock.Setup(x => x.Id).Returns(userId);
+
+        _chatRoomRepositoryMock.Setup(x =>
+           x.GetChatRoomToSendMessage(request.ChatRoomId, userId, CancellationToken.None))
+           .ReturnsAsync(chatRoom);
+
+        // Act
+        var result = await _handler.Handle(request, CancellationToken.None);
+
+        // Assert
+        var data = result.Value;
+
+        result.IsSuccess.Should().BeTrue();
+        _messageProducerMock.Verify(x => x.Publish(It.IsAny<ChatCommandMessage>(), QueueNames.ChatCommand), Times.Once);
     }
 }
