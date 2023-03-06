@@ -28,7 +28,9 @@ static IServiceCollection Inject(
     services.AddScoped<IStockPriceService, StooqService>();
 
     services.AddScoped<ChatMessageCommandInvoker>();
+
     services.AddScoped<IChatMessageCommand, StockPriceCommand>();
+    services.AddScoped<IChatMessageCommand, PingPongCommand>();
 
     return services;
 }
