@@ -8,6 +8,7 @@ public static class LoggingConfiguration
     {
         var logger = new LoggerConfiguration()
             .ReadFrom.Configuration(builder.Configuration)
+            .Enrich.WithProperty("Application", nameof(WebApp))
             .CreateLogger();
 
         builder.Logging.AddSerilog(logger);
