@@ -3,7 +3,7 @@
 ## Environment
 
 - PostgreSQL
-- Seq
+- Seq (log)
 - RabbitMQ
 
 In the root folder of the application, run the command:
@@ -20,6 +20,8 @@ cd docker && docker-compose -f docker-compose.yml -f docker-compose.env.yml up -
 ```
 
 After the containers are running, access the website in [http://localhost:5010/](http://localhost:5010/)
+
+You can also check the 2 application logs in Seq [http://localhost:5341/](http://localhost:5341/)
 
 ## How it works?
 
