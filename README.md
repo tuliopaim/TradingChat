@@ -23,6 +23,9 @@ After the containers are running, access the website in [http://localhost:5010/]
 
 You can also check the 2 application logs in Seq [http://localhost:5341/](http://localhost:5341/)
 
+When you run the `Environment + WebApp + ChatBot` compose, the applications will run with the `ASPNETCORE_ENVIRONMENT=Internal`, 
+and will wait 10 seconds to fully run, waiting for the other services to be up and running.
+
 ## How it works?
 
 - The user can register and login in the website.
@@ -47,6 +50,8 @@ enqueued in the `ChatMessage` queue.
 Back in the WebApp project, there is a background service consuming this queue, and sending 
 the response message to `ChatHub`, where it will be broadcasted to all the users connected to
 that chat.
+
+In the first execution of the WebApp, the Bot user will be created.
 
 ## Architecture
 
