@@ -9,17 +9,20 @@ public abstract class QueueConsumerBackgroundService<TMessage> : BackgroundServi
     private readonly IQueueConsumer _consumer;
     private readonly string _queueName;
     private readonly ushort _prefetchCount;
+    private readonly ushort? _retryCount;
 
     public QueueConsumerBackgroundService(
         ILogger<QueueConsumerBackgroundService<TMessage>> logger,
         IQueueConsumer consumer,
         string queueName,
-        ushort prefetchCount = 1)
+        ushort prefetchCount = 1,
+        ushort? retryCount = null)
     {
         _logger = logger;
         _consumer = consumer;
         _queueName = queueName;
         _prefetchCount = prefetchCount;
+        _retryCount = retryCount;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -27,7 +30,8 @@ public abstract class QueueConsumerBackgroundService<TMessage> : BackgroundServi
         _consumer.StartConsuming<TMessage>(
             _queueName,
             _prefetchCount,
-            HandleMessage);
+            HandleMessage,
+            _retryCount);
 
         while (!stoppingToken.IsCancellationRequested)
         {
