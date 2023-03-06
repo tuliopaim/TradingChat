@@ -12,8 +12,8 @@ using TradingChat.Infrastructure.Context;
 namespace TradingChat.Infrastructure.Migrations
 {
     [DbContext(typeof(TradingChatDbContext))]
-    [Migration("20230304191159_AddChatMessage")]
-    partial class AddChatMessage
+    [Migration("20230306004447_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

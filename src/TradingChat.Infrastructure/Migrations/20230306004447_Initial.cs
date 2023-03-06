@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -16,19 +17,6 @@ namespace TradingChat.Infrastructure.Migrations
 
             migrationBuilder.EnsureSchema(
                 name: "identity");
-
-            migrationBuilder.CreateTable(
-                name: "chat_rooms",
-                schema: "tc",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_chat_rooms", x => x.Id);
-                });
 
             migrationBuilder.CreateTable(
                 name: "identity_users",
@@ -210,6 +198,58 @@ namespace TradingChat.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "chat_rooms",
+                schema: "tc",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    MaxNumberOfUsers = table.Column<int>(type: "integer", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_chat_rooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_chat_rooms_chat_users_OwnerId",
+                        column: x => x.OwnerId,
+                        principalSchema: "tc",
+                        principalTable: "chat_users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "chat_messages",
+                schema: "tc",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Message = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    SentAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    ChatUserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ChatRoomId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_chat_messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_chat_messages_chat_rooms_ChatRoomId",
+                        column: x => x.ChatRoomId,
+                        principalSchema: "tc",
+                        principalTable: "chat_rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_chat_messages_chat_users_ChatUserId",
+                        column: x => x.ChatUserId,
+                        principalSchema: "tc",
+                        principalTable: "chat_users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "chat_room_users",
                 schema: "tc",
                 columns: table => new
@@ -238,10 +278,28 @@ namespace TradingChat.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_chat_messages_ChatRoomId",
+                schema: "tc",
+                table: "chat_messages",
+                column: "ChatRoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_chat_messages_ChatUserId",
+                schema: "tc",
+                table: "chat_messages",
+                column: "ChatUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_chat_room_users_ChatUserId",
                 schema: "tc",
                 table: "chat_room_users",
                 column: "ChatUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_chat_rooms_OwnerId",
+                schema: "tc",
+                table: "chat_rooms",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_chat_users_IdentityUserId",
@@ -299,6 +357,10 @@ namespace TradingChat.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "chat_messages",
+                schema: "tc");
+
+            migrationBuilder.DropTable(
                 name: "chat_room_users",
                 schema: "tc");
 
@@ -327,12 +389,12 @@ namespace TradingChat.Infrastructure.Migrations
                 schema: "tc");
 
             migrationBuilder.DropTable(
-                name: "chat_users",
-                schema: "tc");
-
-            migrationBuilder.DropTable(
                 name: "roles",
                 schema: "identity");
+
+            migrationBuilder.DropTable(
+                name: "chat_users",
+                schema: "tc");
 
             migrationBuilder.DropTable(
                 name: "identity_users",
