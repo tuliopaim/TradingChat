@@ -1,7 +1,7 @@
-﻿using TradingChat.ChatCommandBot.Commands.Contracts;
+﻿using TradingChat.ChatBot.Commands.Contracts;
 using TradingChat.Core;
 
-namespace TradingChat.ChatCommandBot.Commands;
+namespace TradingChat.ChatBot.Commands;
 
 public class ChatMessageCommandInvoker
 {

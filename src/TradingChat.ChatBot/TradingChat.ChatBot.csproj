@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-TradingChat.ChatCommandBot-bd920bd4-c3ee-47c1-a5a0-b72145d0ad48</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,12 +20,13 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TradingChat.ChatCommandBot.Contracts\TradingChat.ChatCommandBot.Commands.csproj" />
+    <ProjectReference Include="..\TradingChat.ChatBot.Commands\TradingChat.ChatBot.Commands.csproj" />
+    <ProjectReference Include="..\TradingChat.ChatBot.External.Stooq\TradingChat.ChatBot.External.Stooq.csproj" />
     <ProjectReference Include="..\TradingChat.Core.Rabbit\TradingChat.Core.Rabbit.csproj" />
     <ProjectReference Include="..\TradingChat.Core\TradingChat.Core.csproj" />
-    <ProjectReference Include="..\TradingChat.ExternalService.Stooq\TradingChat.ExternalService.Stooq.csproj" />
   </ItemGroup>
 </Project>

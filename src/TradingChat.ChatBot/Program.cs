@@ -1,11 +1,11 @@
 using RabbitMQ.Client;
-using TradingChat.ChatCommandBot;
-using TradingChat.ChatCommandBot.Commands.Contracts;
-using TradingChat.ExternalService.Stooq;
-using TradingChat.ChatCommandBot.Commands;
-using TradingChat.ChatCommandBot.Commands.ChatMessageCommands;
 using TradingChat.Core.Rabbit;
 using TradingChat.Core.Messaging;
+using TradingChat.ChatBot.External.Stooq;
+using TradingChat.ChatBot.Commands.ChatMessageCommands;
+using TradingChat.ChatBot;
+using TradingChat.ChatBot.Commands;
+using TradingChat.ChatBot.Commands.Contracts;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostBuilder, services) =>

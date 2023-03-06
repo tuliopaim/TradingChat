@@ -1,6 +1,6 @@
 ﻿using TradingChat.Core;
 
-namespace TradingChat.ChatCommandBot.Commands.Contracts;
+namespace TradingChat.ChatBot.Commands.Contracts;
 
 public interface IChatMessageCommand
 {

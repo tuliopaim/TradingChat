@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TradingChat.ExternalService.Stooq\TradingChat.ExternalService.Stooq.csproj" />
+    <ProjectReference Include="..\TradingChat.ChatBot.External.Stooq\TradingChat.ChatBot.External.Stooq.csproj" />
   </ItemGroup>
 
 </Project>

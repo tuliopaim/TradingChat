@@ -12,6 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TradingChat.ChatCommandBot.Contracts\TradingChat.ChatCommandBot.Commands.csproj" />
+    <ProjectReference Include="..\TradingChat.ChatBot.Commands\TradingChat.ChatBot.Commands.csproj" />
   </ItemGroup>
 </Project>

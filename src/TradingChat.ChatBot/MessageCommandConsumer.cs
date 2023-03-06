@@ -1,8 +1,8 @@
-using TradingChat.ChatCommandBot.Commands;
+using TradingChat.ChatBot.Commands;
 using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
 
-namespace TradingChat.ChatCommandBot;
+namespace TradingChat.ChatBot;
 
 public class MessageCommandConsumer : QueueConsumerBackgroundService<ChatCommandMessage>
 {

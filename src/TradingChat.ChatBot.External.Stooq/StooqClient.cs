@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using TradingChat.Core;
 
-namespace TradingChat.ExternalService.Stooq;
+namespace TradingChat.ChatBot.External.Stooq;
 
 public class StooqClient
 {

@@ -1,9 +1,9 @@
 ﻿using CsvHelper;
 using System.Globalization;
-using TradingChat.ChatCommandBot.Commands.Contracts;
+using TradingChat.ChatBot.Commands.Contracts;
 using TradingChat.Core;
 
-namespace TradingChat.ExternalService.Stooq;
+namespace TradingChat.ChatBot.External.Stooq;
 
 public class StooqService : IStockPriceService
 {

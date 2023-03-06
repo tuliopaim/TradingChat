@@ -1,4 +1,4 @@
-﻿namespace TradingChat.ChatCommandBot.Commands.Contracts;
+﻿namespace TradingChat.ChatBot.Commands.Contracts;
 
 public record StockDataDto(
     string Symbol,
