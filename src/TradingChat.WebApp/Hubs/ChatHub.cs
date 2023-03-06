@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using TradingChat.Application.Hubs;
 using TradingChat.Application.UseCases.SendMessage;
 
 namespace TradingChat.WebApp.Hubs;
 
 [Authorize]
-public class ChatHub : Hub
+public class ChatHub : Hub<IChatHub>
 {
     private readonly IMediator _mediator;
 
@@ -29,6 +30,6 @@ public class ChatHub : Hub
 
         await Clients
             .Group(command.ChatRoomId.ToString())
-            .SendAsync("ReceiveMessage", message);
+            .ReceiveMessage(message);
     }
 }
