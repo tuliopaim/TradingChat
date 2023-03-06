@@ -31,7 +31,8 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand, Cha
     {
         var userId = _currentUser.Id!.Value;
 
-        ChatRoom? chatRoom = await GetChatRoom(request, userId, cancellationToken);
+        ChatRoom? chatRoom = await _chatRoomRepository
+            .GetChatRoomToSendMessage(request.ChatRoomId, userId, cancellationToken);
 
         if (chatRoom is null)
         {
@@ -60,15 +61,6 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand, Cha
         return CreateChatMessageDto(userId, chatRoom, message);
     }
 
-    private async Task<ChatRoom?> GetChatRoom(SendMessageCommand request, Guid userId, CancellationToken cancellationToken)
-    {
-        return await _chatRoomRepository.Get()
-            .Where(x => x.Id == request.ChatRoomId)
-            .Include(x => x.Users.Where(u => u.ChatUserId == userId))
-                .ThenInclude(u => u.ChatUser)
-             .FirstOrDefaultAsync(cancellationToken);
-    }
-
     private void PublishChatCommandMessage(ChatMessage message)
     {
         var chatCommandMessage = new ChatCommandMessage 
@@ -90,7 +82,7 @@ public class SendMessageCommandHandler : ICommandHandler<SendMessageCommand, Cha
             Id = message.Id,
             Message = message.Message,
             SentAt = message.SentAt,
-            User = chatRoom.Users.First(u => u.ChatUserId == userId)!.ChatUser!.Name,
+            User = chatRoom.Users.First(u => u.ChatUserId == userId)?.ChatUser?.Name,
         };
     }
 }

@@ -12,7 +12,7 @@ public class ChatMessageInfoDto
     public required Guid Id { get; init; }
     public required string Message { get; init; }
     public required DateTimeOffset SentAt { get; init; }
-    public required string User { get; init; }
+    public required string? User { get; init; }
 
     public string SentAtString => SentAt
         .LocalDateTime
