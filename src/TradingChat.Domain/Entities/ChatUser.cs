@@ -29,7 +29,7 @@ public class ChatUser
         return new ChatUser
         {
             Id = new Guid("63424FA2-0161-4DCA-ADD5-FA1386E91B8C"),
-            Name = "Admin",
+            Name = "Bot",
             IdentityUserId = new Guid("63424FA2-0161-4DCA-ADD5-FA1386E91B8C"),
         };
     }

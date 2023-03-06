@@ -25,7 +25,7 @@ public class QueueCreator
 
         if (environment.IsEnvironment("Internal"))
         {
-            await Task.Delay(5 * 1000);
+            await Task.Delay(10 * 1000);
         }
 
         using var scope = _serviceProvider.CreateScope();

@@ -41,17 +41,17 @@ public class BotUserCreator
             return;
         }
 
-        var adminEmail = _configuration["BotUser:Email"]!;
-        var adminPass = _configuration["BotUser:Password"]!;
+        var botUserEmail = _configuration["BotUser:Email"]!;
+        var botUserPass = _configuration["BotUser:Password"]!;
 
         var identityUser = new IdentityUser<Guid>
         {
             Id = botUser.Id,
-            UserName = adminEmail,
-            Email = adminEmail,
+            UserName = botUserEmail,
+            Email = botUserEmail,
         };
 
-        var result = await userManager.CreateAsync(identityUser, adminPass);
+        var result = await userManager.CreateAsync(identityUser, botUserPass);
 
         chatUserRepository.Add(botUser);
 
