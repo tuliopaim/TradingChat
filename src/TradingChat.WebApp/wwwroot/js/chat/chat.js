@@ -4,6 +4,7 @@ $(function(){
 
     var connection = new signalR.HubConnectionBuilder()
         .withUrl("/Chat/Hub")
+        .withAutomaticReconnect()
         .build();
 
     connection.on("ReceiveMessage", function (message) {
@@ -45,6 +46,6 @@ $(function(){
         connection.invoke("SendMessage", {
             chatRoomId,
             message
-        });
+        }).catch((err) => console.error(err.ToString()));
     });
 })
