@@ -12,16 +12,13 @@ namespace TradingChat.WebApp.Areas.Identity.Pages.Account;
 public class RegisterModel : PageModel
 {
     private readonly IMediator _mediator;
-    private readonly SignInManager<IdentityUser<Guid>> _signInManager;
     private readonly ILogger<RegisterModel> _logger;
 
     public RegisterModel(
         IMediator mediator,
-        SignInManager<IdentityUser<Guid>> signInManager,
         ILogger<RegisterModel> logger)
     {
         _mediator = mediator;
-        _signInManager = signInManager;
         _logger = logger;
     }
 
