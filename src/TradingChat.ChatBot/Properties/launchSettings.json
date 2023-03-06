@@ -1,11 +1,21 @@
 {
   "profiles": {
-    "TradingChat.ChatCommandBot": {
+    "http": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Internal"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": true
-    } 
-  }
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5044"
+    },
+    "https": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7191;http://localhost:5044"
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json"
 }

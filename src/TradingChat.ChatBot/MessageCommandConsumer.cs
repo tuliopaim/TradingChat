@@ -1,4 +1,4 @@
-using TradingChat.ChatBot.Commands;
+﻿using TradingChat.ChatBot.Commands;
 using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
 

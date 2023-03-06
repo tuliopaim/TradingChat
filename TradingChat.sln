@@ -45,17 +45,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Core", "src\Tra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Core.Rabbit", "src\TradingChat.Core.Rabbit\TradingChat.Core.Rabbit.csproj", "{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot", "src\TradingChat.ChatBot\TradingChat.ChatBot.csproj", "{021AF573-1896-4FD9-8135-76BA362545E6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot.Commands", "src\TradingChat.ChatBot.Commands\TradingChat.ChatBot.Commands.csproj", "{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot.External.Stooq", "src\TradingChat.ChatBot.External.Stooq\TradingChat.ChatBot.External.Stooq.csproj", "{18A0B879-C23C-4809-AB59-1378AF03AAD8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ExternalService.Stooq.Tests", "src\TradingChat.ChatBot.External.Stooq.Tests\TradingChat.ExternalService.Stooq.Tests.csproj", "{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.Application.Tests", "src\TradingChat.Application.Tests\TradingChat.Application.Tests.csproj", "{3A89979B-252F-4C64-922A-D661CEF32695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Application.Tests", "src\TradingChat.Application.Tests\TradingChat.Application.Tests.csproj", "{3A89979B-252F-4C64-922A-D661CEF32695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.ChatBot.Commands.Tests", "src\TradingChat.ChatBot.Commands.Tests\TradingChat.ChatBot.Commands.Tests.csproj", "{7AF2915C-24CA-44CD-A594-5685F967A260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot.Commands.Tests", "src\TradingChat.ChatBot.Commands.Tests\TradingChat.ChatBot.Commands.Tests.csproj", "{7AF2915C-24CA-44CD-A594-5685F967A260}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.ChatBot", "src\TradingChat.ChatBot\TradingChat.ChatBot.csproj", "{ECD26F49-AA24-4813-AFE0-F5351B7EE272}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,10 +87,6 @@ Global
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{021AF573-1896-4FD9-8135-76BA362545E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{021AF573-1896-4FD9-8135-76BA362545E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{021AF573-1896-4FD9-8135-76BA362545E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{021AF573-1896-4FD9-8135-76BA362545E6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -111,6 +107,10 @@ Global
 		{7AF2915C-24CA-44CD-A594-5685F967A260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AF2915C-24CA-44CD-A594-5685F967A260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AF2915C-24CA-44CD-A594-5685F967A260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECD26F49-AA24-4813-AFE0-F5351B7EE272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECD26F49-AA24-4813-AFE0-F5351B7EE272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECD26F49-AA24-4813-AFE0-F5351B7EE272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECD26F49-AA24-4813-AFE0-F5351B7EE272}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,12 +129,12 @@ Global
 		{C952688C-692B-4DAC-B1D9-C7C846EDB469} = {52535E01-41DC-4CB6-8E6D-9C71AFE63CAD}
 		{0FC77593-D5A2-4289-B033-32DC6BB4008B} = {C952688C-692B-4DAC-B1D9-C7C846EDB469}
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0} = {C952688C-692B-4DAC-B1D9-C7C846EDB469}
-		{021AF573-1896-4FD9-8135-76BA362545E6} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{18A0B879-C23C-4809-AB59-1378AF03AAD8} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
 		{3A89979B-252F-4C64-922A-D661CEF32695} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
 		{7AF2915C-24CA-44CD-A594-5685F967A260} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
+		{ECD26F49-AA24-4813-AFE0-F5351B7EE272} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03FDF07B-F6F9-40DD-A105-006D82B293B8}
