@@ -26,6 +26,11 @@ public class ChatHub : Hub<IChatHub>
     {
         var result = await _mediator.Send(command);
 
+        if (!result.IsSuccess)
+        {
+            return;
+        }
+
         var message = result.Value;
 
         await Clients
