@@ -30,7 +30,7 @@ services:
     networks:
         - trading-chat-net
     environment:
-        - DOTNET_ENVIRONMENT=Internal
+        - ASPNETCORE_ENVIRONMENT=Internal
     depends_on:
       - postgres
       - seq
