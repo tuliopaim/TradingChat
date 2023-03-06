@@ -128,7 +128,7 @@ It's divided in 3 layers of responsability:
 
 #### ChatBot
 
-The ChatBot layer is the WorkerService that consumes the ChatCommand queue and passes it to the 
+The ChatBot layer is the API that consumes the ChatCommand queue and passes it to the 
 `ChatMessageCommandInvoker`, present in the Commands layer.
 
 #### Commands
