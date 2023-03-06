@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
+using TradingChat.Application.Hubs;
 using TradingChat.Application.UseCases.SendMessageFromServer;
 using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
@@ -9,14 +10,14 @@ namespace TradingChat.WebApp.Consumers;
 
 public class ChatMessageConsumer : QueueConsumerBackgroundService<NewMessage>
 {
-    private readonly IHubContext<ChatHub> _chatHubContext;
+    private readonly IHubContext<ChatHub, IChatHub> _chatHubContext;
     private readonly IServiceProvider _serviceProvider;
 
     public ChatMessageConsumer(
         ILogger<ChatMessageConsumer> logger,
         IQueueConsumer consumer,
         IServiceProvider serviceProvider,
-        IHubContext<ChatHub> chatHubContext) : base(logger, consumer, QueueNames.ChatMessage)
+        IHubContext<ChatHub, IChatHub> chatHubContext) : base(logger, consumer, QueueNames.ChatMessage)
     {
         _serviceProvider = serviceProvider;
         _chatHubContext = chatHubContext;
@@ -40,7 +41,7 @@ public class ChatMessageConsumer : QueueConsumerBackgroundService<NewMessage>
 
         await _chatHubContext.Clients
             .Group(message.ChatRoomId.ToString())
-            .SendAsync("ReceiveMessage", result.Value);
+            .ReceiveMessage(result.Value);
 
         return true;
     }
