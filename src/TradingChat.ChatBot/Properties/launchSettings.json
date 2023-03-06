@@ -3,7 +3,7 @@
     "TradingChat.ChatCommandBot": {
       "commandName": "Project",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
+        "DOTNET_ENVIRONMENT": "Internal"
       },
       "dotnetRunMessages": true
     } 
