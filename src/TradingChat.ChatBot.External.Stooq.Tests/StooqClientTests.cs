@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Moq;
+using TradingChat.ChatBot.External.Stooq;
 
 namespace TradingChat.ExternalService.Stooq.Tests;
 

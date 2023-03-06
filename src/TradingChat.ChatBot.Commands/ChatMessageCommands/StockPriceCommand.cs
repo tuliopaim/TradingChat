@@ -1,9 +1,9 @@
-﻿using TradingChat.ChatCommandBot.Commands.Contracts;
+﻿using TradingChat.ChatBot.Commands.Contracts;
 using TradingChat.Core;
 using TradingChat.Core.Messages;
 using TradingChat.Core.Messaging;
 
-namespace TradingChat.ChatCommandBot.Commands.ChatMessageCommands;
+namespace TradingChat.ChatBot.Commands.ChatMessageCommands;
 
 public class StockPriceCommand : IChatMessageCommand
 {
