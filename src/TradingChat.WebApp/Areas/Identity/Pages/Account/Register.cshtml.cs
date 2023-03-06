@@ -54,9 +54,11 @@ public class RegisterModel : PageModel
         public string ConfirmPassword { get; set; }
     }
 
-    public async Task OnGetAsync(string returnUrl = null)
+    public Task OnGetAsync(string returnUrl = null)
     {
         ReturnUrl = returnUrl;
+
+        return Task.CompletedTask;
     }
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
