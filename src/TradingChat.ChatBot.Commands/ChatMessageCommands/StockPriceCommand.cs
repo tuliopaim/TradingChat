@@ -27,7 +27,7 @@ public class StockPriceCommand : IChatMessageCommand
 
     public async Task<Result> ExecuteAsync(string message, Guid chatId)
     {
-        string[] parts = message.Split('=');
+        string[] parts = message.Split('=', StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length != 2)
         {
             return new Error("Invalid stock command");
