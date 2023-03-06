@@ -24,7 +24,7 @@ public class ChatUser
     private readonly List<ChatRoomUser> _chats = new();
     public virtual IReadOnlyList<ChatRoomUser>? Chats => _chats.AsReadOnly();
 
-    public static ChatUser AdminChatUser()
+    public static ChatUser ChatBotUser()
     {
         return new ChatUser
         {
