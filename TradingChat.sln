@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{6FFCE5
 	ProjectSection(SolutionItems) = preProject
 		docker\.env = docker\.env
 		docker\docker-compose.yml = docker\docker-compose.yml
+		docker\docker-compose.env.yml = docker\docker-compose.env.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.WebApp", "src\TradingChat.WebApp\TradingChat.WebApp.csproj", "{03B75624-255A-4421-9D70-EE3DB46666C6}"
@@ -34,8 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Appl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Application", "src\TradingChat.Application\TradingChat.Application.csproj", "{7495DF46-8B52-4C57-9052-388E5E453631}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatCommandBot", "src\TradingChat.ChatCommandBot\TradingChat.ChatCommandBot.csproj", "{3DDA16EC-9F97-4FFA-98AC-EB39608645FE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - ChatBot", "2 - ChatBot", "{0105D41E-6FCF-4F9B-B327-79DA3318ABAD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{52535E01-41DC-4CB6-8E6D-9C71AFE63CAD}"
@@ -44,13 +43,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Core", "0 - Core", "{C9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Core", "src\TradingChat.Core\TradingChat.Core.csproj", "{0FC77593-D5A2-4289-B033-32DC6BB4008B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ExternalService.Stooq.Tests", "src\TradingChat.ExternalService.Stooq.Tests\TradingChat.ExternalService.Stooq.Tests.csproj", "{A352F572-9078-4F02-BD3E-94E98ACCDDC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.Core.Rabbit", "src\TradingChat.Core.Rabbit\TradingChat.Core.Rabbit.csproj", "{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ExternalService.Stooq", "src\TradingChat.ExternalService.Stooq\TradingChat.ExternalService.Stooq.csproj", "{B11A519D-B423-47E4-A2A3-181EE5453F76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot", "src\TradingChat.ChatBot\TradingChat.ChatBot.csproj", "{021AF573-1896-4FD9-8135-76BA362545E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatCommandBot.Commands", "src\TradingChat.ChatCommandBot.Contracts\TradingChat.ChatCommandBot.Commands.csproj", "{68C4C09B-CC24-4181-892A-3DF0D045EEBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot.Commands", "src\TradingChat.ChatBot.Commands\TradingChat.ChatBot.Commands.csproj", "{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingChat.Core.Rabbit", "src\TradingChat.Core.Rabbit\TradingChat.Core.Rabbit.csproj", "{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ChatBot.External.Stooq", "src\TradingChat.ChatBot.External.Stooq\TradingChat.ChatBot.External.Stooq.csproj", "{18A0B879-C23C-4809-AB59-1378AF03AAD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingChat.ExternalService.Stooq.Tests", "src\TradingChat.ChatBot.External.Stooq.Tests\TradingChat.ExternalService.Stooq.Tests.csproj", "{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,30 +75,30 @@ Global
 		{7495DF46-8B52-4C57-9052-388E5E453631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7495DF46-8B52-4C57-9052-388E5E453631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7495DF46-8B52-4C57-9052-388E5E453631}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DDA16EC-9F97-4FFA-98AC-EB39608645FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DDA16EC-9F97-4FFA-98AC-EB39608645FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DDA16EC-9F97-4FFA-98AC-EB39608645FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DDA16EC-9F97-4FFA-98AC-EB39608645FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0FC77593-D5A2-4289-B033-32DC6BB4008B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FC77593-D5A2-4289-B033-32DC6BB4008B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FC77593-D5A2-4289-B033-32DC6BB4008B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FC77593-D5A2-4289-B033-32DC6BB4008B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A352F572-9078-4F02-BD3E-94E98ACCDDC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A352F572-9078-4F02-BD3E-94E98ACCDDC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A352F572-9078-4F02-BD3E-94E98ACCDDC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A352F572-9078-4F02-BD3E-94E98ACCDDC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B11A519D-B423-47E4-A2A3-181EE5453F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B11A519D-B423-47E4-A2A3-181EE5453F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B11A519D-B423-47E4-A2A3-181EE5453F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B11A519D-B423-47E4-A2A3-181EE5453F76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68C4C09B-CC24-4181-892A-3DF0D045EEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68C4C09B-CC24-4181-892A-3DF0D045EEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68C4C09B-CC24-4181-892A-3DF0D045EEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68C4C09B-CC24-4181-892A-3DF0D045EEBE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021AF573-1896-4FD9-8135-76BA362545E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021AF573-1896-4FD9-8135-76BA362545E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021AF573-1896-4FD9-8135-76BA362545E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021AF573-1896-4FD9-8135-76BA362545E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18A0B879-C23C-4809-AB59-1378AF03AAD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A0B879-C23C-4809-AB59-1378AF03AAD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A0B879-C23C-4809-AB59-1378AF03AAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A0B879-C23C-4809-AB59-1378AF03AAD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,14 +113,14 @@ Global
 		{3207E1EF-F8F3-4CB1-A6D5-B353C2B796E9} = {2DC5F2F3-EF8D-4F7C-BEBA-ABA0F5A46027}
 		{2F6E8D58-A1AB-4795-9793-AA6FCCAB01BE} = {498F2742-E33E-4718-BBD3-FFC4D13A67FB}
 		{7495DF46-8B52-4C57-9052-388E5E453631} = {2F6E8D58-A1AB-4795-9793-AA6FCCAB01BE}
-		{3DDA16EC-9F97-4FFA-98AC-EB39608645FE} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{0105D41E-6FCF-4F9B-B327-79DA3318ABAD} = {52535E01-41DC-4CB6-8E6D-9C71AFE63CAD}
 		{C952688C-692B-4DAC-B1D9-C7C846EDB469} = {52535E01-41DC-4CB6-8E6D-9C71AFE63CAD}
 		{0FC77593-D5A2-4289-B033-32DC6BB4008B} = {C952688C-692B-4DAC-B1D9-C7C846EDB469}
-		{A352F572-9078-4F02-BD3E-94E98ACCDDC4} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
-		{B11A519D-B423-47E4-A2A3-181EE5453F76} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
-		{68C4C09B-CC24-4181-892A-3DF0D045EEBE} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
 		{45F9E6FD-BB6A-4BD2-A759-7F15BC47C0F0} = {C952688C-692B-4DAC-B1D9-C7C846EDB469}
+		{021AF573-1896-4FD9-8135-76BA362545E6} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
+		{B140B9F6-20FF-407B-9B00-C63CD0C05E6B} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
+		{18A0B879-C23C-4809-AB59-1378AF03AAD8} = {0105D41E-6FCF-4F9B-B327-79DA3318ABAD}
+		{89C40F45-5EBF-4C4F-9272-3D5F02C035F9} = {095BA534-13EE-4935-AF07-8D8B6495FD8C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03FDF07B-F6F9-40DD-A105-006D82B293B8}
