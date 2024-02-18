@@ -47,7 +47,6 @@ public static class DependencyInjection
                 Password = rabbitSettings.Password,
                 DispatchConsumersAsync = true,
                 ConsumerDispatchConcurrency = 1,
-                UseBackgroundThreadsForIO = false
             });
 
         services.AddSingleton<RabbitMqConnection>();

@@ -51,15 +51,13 @@ public class RabbitMqConsumer : IQueueConsumer
                     channel.BasicAck(args.DeliveryTag, multiple: false);
                     return;
                 }
-
-                NackWithRetryIncrement<TMessage>(args, channel, maxRetry);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while processing message of type {MessageType}", typeof(TMessage).Name);
-
-                NackWithRetryIncrement<TMessage>(args, channel, maxRetry);
             }
+
+            NackWithRetryIncrement<TMessage>(args, channel, maxRetry);
         };
 
         channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
@@ -77,16 +75,17 @@ public class RabbitMqConsumer : IQueueConsumer
         var retryCount = args.BasicProperties.GetRetryCount();
         var shouldRetry = retryCount <= maxRetryCount;
 
-        _logger.LogInformation("Nacking message of type {MessageType} for the {RetryCount} time...", typeof(TMessage), retryCount);
+        _logger.LogInformation("Nack message of type {MessageType} for the {RetryCount} time...", typeof(TMessage), retryCount);
 
         if (shouldRetry)
         {
-            _logger.LogInformation("Requeuing message of type {MessateType} for retry...", typeof(TMessage));
+            _logger.LogInformation("Re-enqueuing message of type {MessageType} for retry...", typeof(TMessage));
 
             channel.BasicPublish(args.Exchange, args.RoutingKey, args.BasicProperties, args.Body);
+
+            return;
         }
 
         channel.BasicNack(args.DeliveryTag, multiple: false, requeue: false);
     }
 }
-
