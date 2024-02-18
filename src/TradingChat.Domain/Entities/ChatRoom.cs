@@ -21,7 +21,7 @@ public class ChatRoom
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();
-    public string Name { get; private set; }
+    public string Name { get; private set; }  = "";
     public int MaxNumberOfUsers { get; private set; }
 
     public Guid OwnerId { get; private set; }
