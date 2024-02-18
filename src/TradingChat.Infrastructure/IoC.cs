@@ -100,7 +100,6 @@ public static class IoC
                 Password = rabbitSettings.Password,
                 DispatchConsumersAsync = true,
                 ConsumerDispatchConcurrency = 1,
-                UseBackgroundThreadsForIO = false
             });
 
         services.AddSingleton<RabbitMqConnection>();
