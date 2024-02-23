@@ -2,7 +2,9 @@ using TradingChat.ChatBot;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddSerilog();
+builder
+    .AddSerilog()
+    .AddTracing();
 
 builder.Services.InjectServices(builder.Configuration);
 

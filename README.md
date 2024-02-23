@@ -10,7 +10,7 @@ In the root folder of the application, run the command:
 
 ### Environment (postgres, seq)
 ```
-cd docker && docker-compose -f .\docker-compose.env.yml up -d
+cd docker && docker-compose -f docker-compose.env.yml up -d
 ```
 
 ### Environment + WebApp + ChatBot
@@ -172,5 +172,6 @@ ___
 - [x] Dockerize everything
 - [x] README
 - [x] Unit tests
-- [ ] Integration tests
+- [ ] Integration Tests
+- [ ] Tracing
 

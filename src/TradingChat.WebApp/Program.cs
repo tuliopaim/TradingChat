@@ -6,7 +6,9 @@ using TradingChat.WebApp.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddSerilog();
+builder
+    .AddSerilog()
+    .AddTracing();
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
@@ -18,6 +20,8 @@ builder.Services.InjectApiServices(builder.Configuration);
 builder.Services.AddHostedService<ChatMessageConsumer>();
 
 var app = builder.Build();
+
+app.EnrichLogsWithTraceId();
 
 await new QueueCreator(app.Services).CreateQueues();
 await new BotUserCreator(app.Configuration, app.Services).Create();
