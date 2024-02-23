@@ -9,7 +9,7 @@ services:
       context: ../.
       dockerfile: ./src/TradingChat.WebApp/Dockerfile
     ports:
-        - 5010:80
+        - 5010:8080
     networks:
         - trading-chat-net
     environment:
@@ -26,7 +26,7 @@ services:
       context: ../.
       dockerfile: ./src/TradingChat.ChatBot/Dockerfile
     ports:
-        - 5020:80
+        - 5020:8080
     networks:
         - trading-chat-net
     environment:
