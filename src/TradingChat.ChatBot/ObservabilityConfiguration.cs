@@ -11,7 +11,8 @@ public static class ObservabilityConfiguration
     {
         var logger = new LoggerConfiguration()
             .ReadFrom.Configuration(builder.Configuration)
-            .Enrich.WithProperty("Application", nameof(ChatBot))
+            .Enrich.WithProperty("app", nameof(ChatBot))
+            .Enrich.WithProperty("env", builder.Environment.EnvironmentName)
             .CreateLogger();
 
         builder.Logging.AddSerilog(logger);

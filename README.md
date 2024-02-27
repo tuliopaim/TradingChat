@@ -174,4 +174,9 @@ ___
 - [x] Unit tests
 - [ ] Integration Tests
 - [ ] Tracing
+    - [x] Initial POC with Seq
+    - [x] Grafana Loki
+    - [ ] Grafana Tempo
+    - [ ] OTEL collector
+    - [ ] Prometheus
 

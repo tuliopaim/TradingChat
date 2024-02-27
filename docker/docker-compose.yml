@@ -16,7 +16,8 @@ services:
         - ASPNETCORE_ENVIRONMENT=Internal
     depends_on:
       - postgres
-      - seq
+      - grafana
+      - loki
       - rabbitmq
 
   chatbot:
@@ -33,7 +34,8 @@ services:
         - ASPNETCORE_ENVIRONMENT=Internal
     depends_on:
       - postgres
-      - seq
+      - grafana
+      - loki
       - rabbitmq
 
 networks:
