@@ -16,6 +16,7 @@ public static class ObservabilityConfiguration
             .Enrich.WithProperty("env", builder.Environment.EnvironmentName)
             .CreateLogger();
 
+        builder.Logging.ClearProviders();
         builder.Logging.AddSerilog(logger);
 
         return builder;
@@ -41,7 +42,7 @@ public static class ObservabilityConfiguration
                     opt.Endpoint = new Uri(
                         builder.Configuration["OpenTelemetry:Endpoint"]
                         ?? throw new InvalidOperationException("OpenTelemetry:Endpoint is not configured"));
-                    opt.Protocol = OtlpExportProtocol.HttpProtobuf;
+                    opt.Protocol = OtlpExportProtocol.Grpc;
                 }));
 
         return builder;
