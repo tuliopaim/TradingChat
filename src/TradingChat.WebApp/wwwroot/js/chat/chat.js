@@ -38,10 +38,22 @@ $(function(){
     $(".send-message-form").submit(function (e) {
         e.preventDefault();
 
-        let chatRoomId = $("#chat-id").val();
-        let message = $(".message-input").val();
+        var formData = {
+            ChatRoomId: $("#chat-id").val(),
+            Message: $("#message-input").val(),
+        }
 
-        $(".message-input").val("");
+        $.ajax({
+            type: 'POST',
+            url: '/Chat/SendMessage/', // Change this to your actual endpoint
+            data: formData,
+            success: function(response) {
+                $("#message-input").val("");
+            },
+            error: function(xhr, status, error) {
+                console.error(error.ToString())
+            }
+        });
 
         connection.invoke("SendMessage", {
             chatRoomId,

@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using TradingChat.Application.Hubs;
 using TradingChat.Application.UseCases.CreateChatRoom;
 using TradingChat.Application.UseCases.GetChatMessages;
 using TradingChat.Application.UseCases.GetChatsInfo;
@@ -9,6 +11,7 @@ using TradingChat.Application.UseCases.SendMessage;
 using TradingChat.Application.UseCases.Shared;
 using TradingChat.Core;
 using TradingChat.WebApp.Extensions;
+using TradingChat.WebApp.Hubs;
 
 namespace TradingChat.WebApp.Controllers;
 
@@ -85,15 +88,23 @@ public class ChatController : Controller
     [Authorize]
     public async Task<IActionResult> SendMessage(
        [FromServices] IMediator mediator,
-       [FromBody]SendMessageCommand command)
+       [FromServices] IHubContext<ChatHub, IChatHub> chatHubContext,
+       [FromForm]SendMessageCommand command)
     {
-        Result result = await mediator.Send(command);
-    
-        return result.IsSuccess 
-            ? Ok() 
-            : BadRequest(new
-            {
-                errors = result.Errors.Select(e => e.Message),
-            });
+        Result<ChatMessageInfoDto> result = await mediator.Send(command);
+
+        if (result.IsSuccess)
+        {
+            await chatHubContext.Clients
+                .Group(command.ChatRoomId.ToString())
+                .ReceiveMessage(result.Value);
+
+            return Ok();
+        }
+
+        return BadRequest(new
+        {
+            errors = result.Errors.Select(e => e.Message),
+        });
     }
 }
