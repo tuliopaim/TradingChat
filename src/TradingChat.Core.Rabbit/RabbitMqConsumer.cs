@@ -1,5 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics;
+using System.Text;
+using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using TradingChat.Core.Messaging;
@@ -8,6 +13,9 @@ namespace TradingChat.Core.Rabbit;
 
 public class RabbitMqConsumer : IQueueConsumer
 {
+    private static readonly ActivitySource ActivitySource = new(nameof(RabbitMqConsumer));
+    private static readonly TextMapPropagator Propagator = Propagators.DefaultTextMapPropagator;
+
     private readonly ILogger<RabbitMqConsumer> _logger;
     private readonly RabbitMqConnection _rabbitConnection;
     private readonly RabbitMqSettings _rabbitSettings;
@@ -36,13 +44,31 @@ public class RabbitMqConsumer : IQueueConsumer
 
         consumer.Received += async (sender, args) =>
         {
+            var parentContext = Propagator.Extract(
+                    default,
+                    args.BasicProperties,
+                    ExtractTraceContextFromBasicProperties);
+
+            Baggage.Current = parentContext.Baggage;
+
+            var activityName = $"ReceiveMessage {args.RoutingKey}";
+
+            using var activity = ActivitySource.StartActivity(
+                activityName,
+                ActivityKind.Consumer,
+                parentContext.ActivityContext);
+
             _logger.LogInformation("Message of type {MessageType} received on {ConsumerType}",
                 typeof(TMessage).Name,
                 GetType().Name);
 
             try
             {
-                var success = await messageHandler(args.GetDeserializedMessage<TMessage>());
+                var message = Encoding.UTF8.GetString(args.Body.Span);
+
+                activity?.AddTag("message", message);
+
+                var success = await messageHandler(JsonSerializer.Deserialize<TMessage>(message)!);
 
                 if (success)
                 {
@@ -87,5 +113,23 @@ public class RabbitMqConsumer : IQueueConsumer
         }
 
         channel.BasicNack(args.DeliveryTag, multiple: false, requeue: false);
+    }
+
+    private IEnumerable<string> ExtractTraceContextFromBasicProperties(IBasicProperties props, string key)
+    {
+        try
+        {
+            if (props.Headers.TryGetValue(key, out var value))
+            {
+                var bytes = value as byte[];
+                return new[] { Encoding.UTF8.GetString(bytes!) };
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to extract trace context.");
+        }
+
+        return Enumerable.Empty<string>();
     }
 }

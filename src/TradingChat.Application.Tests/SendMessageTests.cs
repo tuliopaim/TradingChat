@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using TradingChat.Application.Abstractions;
 using TradingChat.Application.UseCases.SendMessage;
@@ -22,6 +23,7 @@ public class SendMessageTests
         _chatRoomRepositoryMock = new Mock<IChatRoomRepository>();
         _messageProducerMock = new Mock<IMessageProducer>();
         _handler = new SendMessageCommandHandler(
+            new Mock<ILogger<SendMessageCommandHandler>>().Object,
             _currentUserMock.Object,
             _chatRoomRepositoryMock.Object,
             _messageProducerMock.Object);

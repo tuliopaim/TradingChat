@@ -1,6 +1,9 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using RabbitMQ.Client;
 using TradingChat.Core.Messaging;
 
@@ -8,6 +11,9 @@ namespace TradingChat.Core.Rabbit;
 
 public class RabbitMqProducer : IMessageProducer
 {
+    private static readonly ActivitySource ActivitySource = new(nameof(RabbitMqProducer));
+    private static readonly TextMapPropagator Propagator = Propagators.DefaultTextMapPropagator;
+
     private readonly RabbitMqConnection _rabbitConexao;
     private readonly ILogger<RabbitMqProducer> _logger;
     private readonly IModel _channel;
@@ -16,10 +22,10 @@ public class RabbitMqProducer : IMessageProducer
     {
         _rabbitConexao = rabbitConexao;
         _logger = logger;
-        _channel = Conexao.CreateModel();
+        _channel = Connection.CreateModel();
     }
 
-    private IConnection Conexao => _rabbitConexao.Connection;
+    private IConnection Connection => _rabbitConexao.Connection;
 
     public bool Publish<TMessage>(TMessage message, string routingKey)
     {
@@ -32,18 +38,39 @@ public class RabbitMqProducer : IMessageProducer
     {
         try
         {
-            if (Conexao is null) return false;
+            if (Connection is null) return false;
 
-            var mensagemBytes = Encoding.UTF8.GetBytes(serializedMessage);
+            var activityName = $"PublishMessage {routingKey}";
+            using var activity = ActivitySource.StartActivity(activityName, ActivityKind.Producer);
 
-            var propriedades = _channel.CreateBasicProperties();
-            propriedades.Persistent = true;
-            propriedades.CreateRetryCountHeader();
+            ActivityContext contextToInject = default;
+            if (activity is not null)
+            {
+                contextToInject = activity.Context;
+            }
+            else
+            {
+                contextToInject = Activity.Current?.Context ?? default;
+            }
+
+            var props = _channel.CreateBasicProperties();
+
+            props.Persistent = true;
+            props.CreateRetryCountHeader();
+
+            Propagator.Inject(
+                new PropagationContext(contextToInject, Baggage.Current),
+                props,
+                InjectTraceContextIntoBasicProperties);
+
+            AddMessagingTags(activity, routingKey);
+
+            var messageBytes = Encoding.UTF8.GetBytes(serializedMessage);
 
             _channel.BasicPublish("",
                 routingKey,
-                propriedades,
-                mensagemBytes);
+                props,
+                messageBytes);
 
             return true;
         }
@@ -54,5 +81,26 @@ public class RabbitMqProducer : IMessageProducer
 
             return false;
         }
+    }
+
+    private void InjectTraceContextIntoBasicProperties(IBasicProperties props, string key, string value)
+    {
+        try
+        {
+            props.Headers ??= new Dictionary<string, object>();
+
+            props.Headers[key] = value;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to inject trace context.");
+        }
+    }
+
+    private static void AddMessagingTags(Activity? activity, string routingKey)
+    {
+        activity?.SetTag("messaging.system", "rabbitmq");
+        activity?.SetTag("messaging.destination_kind", "queue");
+        activity?.SetTag("messaging.rabbitmq.routing_key", routingKey);
     }
 }

@@ -1,23 +1,9 @@
-﻿using RabbitMQ.Client.Events;
-using RabbitMQ.Client;
-using System.Text;
-using System.Text.Json;
+﻿using RabbitMQ.Client;
 
 namespace TradingChat.Core.Rabbit;
 
 public static class RabbitMqExtensions
 {
-    public static T GetDeserializedMessage<T>(this BasicDeliverEventArgs rabbitEventArgs)
-    {
-        var messageBody = rabbitEventArgs.GetMessageBody();
-        return JsonSerializer.Deserialize<T>(messageBody)!;
-    }
-
-    private static string GetMessageBody(this BasicDeliverEventArgs rabbitEventArgs)
-    {
-        return Encoding.UTF8.GetString(rabbitEventArgs.Body.Span);
-    }
-
     public static int? GetRetryCount(this IBasicProperties properties)
     {
         if (properties.Headers is null) return null;

@@ -1,7 +1,9 @@
-﻿using OpenTelemetry.Exporter;
+﻿using System.Diagnostics;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+using TradingChat.Core.Rabbit;
 
 namespace TradingChat.ChatBot;
 
@@ -13,6 +15,8 @@ public static class ObservabilityConfiguration
             .ReadFrom.Configuration(builder.Configuration)
             .Enrich.WithProperty("app", nameof(ChatBot))
             .Enrich.WithProperty("env", builder.Environment.EnvironmentName)
+            .Enrich.WithProperty("TraceId", Activity.Current?.TraceId.ToHexString() ?? string.Empty)
+            .Enrich.WithProperty("SpanId", Activity.Current?.SpanId.ToHexString() ?? string.Empty)
             .CreateLogger();
 
         builder.Logging.ClearProviders();
@@ -29,11 +33,14 @@ public static class ObservabilityConfiguration
         }
 
         var serviceName = $"{builder.Environment.ApplicationName}:{builder.Environment.EnvironmentName}";
+
         builder.Services.AddOpenTelemetry()
             .WithTracing(b => b
-                .AddSource(builder.Environment.ApplicationName)
+                .AddSource(serviceName)
                 .ConfigureResource(res => res.AddService(serviceName: serviceName))
                 .AddAspNetCoreInstrumentation()
+                .AddSource(nameof(RabbitMqConsumer))
+                .AddSource(nameof(RabbitMqProducer))
                 .AddEntityFrameworkCoreInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddOtlpExporter(opt =>
